@@ -1,11 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Roboto&family=Tilt+Neon&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./grid-style.css">
+    <link rel="stylesheet" href="./styles.css">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <header>
+        <div>
+            <input type="checkbox" id="close-top-btn">
+            <div class="top-wrapper">
+                <div class="top-popup">
+                    <div class="top-popup_left">
+                        <img src="./assets/logo.svg" alt="#">
+
+                        <p>Start a free trial and enjoy 3 months of Shopify for $1/month
+                            <a href="/">Open a Store Now</a>
+                        </p>
+                    </div>
+                    <div class="top-popup_right">
+                        <div>
+                            <span class="top-popup_right_number">
+                                00
+                            </span>
+
+                            <span class="top-popup_right_label">
+                                Days
+                            </span>
+                        </div>
+                        <div>
+                            <span class="top-popup_right_number">
+                                00
+                            </span>
+
+                            <span class="top-popup_right_label">
+                                Hours
+                            </span>
+                        </div>
+                        <div>
+                            <span class="top-popup_right_number">
+                                00
+                            </span>
+
+                            <span class="top-popup_right_label">
+                                Mins
+                            </span>
+                        </div>
+                        <div>
+                            <span class="top-popup_right_number">
+                                00
+                            </span>
+
+                            <span class="top-popup_right_label">
+                                Secs
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <label id="close-top-label" for="close-top-btn">
+                    <span class="material-icons">
+                        close
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="container ">
+            <div id="header" class="row">
+                <div class="col-2">
+                    <img src="./assets/ocolus-logo.svg" alt="logo">
+                </div>
+
+                <ul class="header_catalog col-8">
+                    <li><a href="#">Demos</a></li>
+                    <li><a href="#">Special Deal</a><span class="bg-green">New</span></li>
+                    <li><a href="#">25+ Sections</a></li>
+                    <li><a href="#">Ecommerce</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Open store free</a> <span class="bg-red">New</span></li>
+                </ul>
+
+                <div class="col-2 purchase-btn-wrapper">
+                    <div id="purchase-btn">
+                        <span class="material-icons">
+                            shopping_cart
+                        </span>
+                        <span>Purchase 19$</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="banner-section">
+            <div class="container container-banner row">
+                <div class="container-banner_left col-6">
+                    <img src="./assets//banners/icon.svg" alt="">
+                    <img src="./assets//banners/icon_2.svg" alt="">
+                </div>
+                <div class="container-banner_right col-6 row">
+                    <div class="col-4 col-item marquee" direction="up">
+                        <img src="./assets/banners/1.jpg" alt="">
+                        <img src="./assets/banners/2.jpg" alt="">
+                        <img src="./assets/banners/3.jpg" alt="">
+                        <img src="./assets/banners/1.jpg" alt="">
+                        <img src="./assets/banners/2.jpg" alt="">
+                        <img src="./assets/banners/3.jpg" alt="">
+                    </div>
+                    <div class="col-4 col-item marquee" direction="up">
+                        <img src="./assets/banners/4.jpg" alt="">
+                        <img src="./assets/banners/5.jpg" alt="">
+                        <img src="./assets/banners/6.jpg" alt="">
+                        <img src="./assets/banners/4.jpg" alt="">
+                        <img src="./assets/banners/7.jpg" alt="">
+                        <img src="./assets/banners/3.jpg" alt="">
+                    </div>
+                    <div class="col-4 col-item marquee" direction="up">
+                        <img src="./assets/banners/1.jpg" alt="">
+                        <img src="./assets/banners/8.jpg" alt="">
+                        <img src="./assets/banners/3.jpg" alt="">
+                        <img src="./assets/banners/9.jpg" alt="">
+                        <img src="./assets/banners/2.jpg" alt="">
+                        <img src="./assets/banners/5.jpg" alt="">
+                    </div>
+                </div>
+                <div class="content-wrapper container">
+                    <div class="content">
+                        <h3>
+                            <p>True eCommerce Theme </p> for <span class="special"> Furniture </span> store and more.
+                        </h3>
+                        <p>
+                            The4 is your trusted Shopify Commerce Coach. We empower you with <br>
+                            innovative solutions and unmatched support to achieve your goals. Our<br>
+                            Ocolus theme unlocks your success, creating stunning, high-performing <br>
+                            online stores. Visit The4 Commerce Coach page for more on how we can <br>
+                            help you reach your e-commerce goals.
+                        </p>
+                        <div class="btn-group">
+                            <a class="btn">Explore Ocolus</a>
+                            <a class="btn btn-outline">Open store free</a>
+                        </div>
+                        <div class="madeby">
+                            <svg width="43" height="48" viewBox="0 0 43 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_121_19)">
+                                    <path
+                                        d="M42.3527 31.7647C42.3527 33.3177 41.3645 35.2941 39.9527 36.1412L23.4351 47.153C22.1645 48 20.0468 48 18.7762 47.153L2.39976 36.1412C0.987991 35.2941 -0.000244141 33.3177 -0.000244141 31.7647V16.2353C-0.000244141 14.6824 0.987991 12.7059 2.39976 11.8589L18.9174 0.847086C20.188 2.72726e-05 22.3056 2.72726e-05 23.5762 0.847086L40.0939 11.8589C41.3645 12.7059 42.4939 14.6824 42.4939 16.2353V31.7647H42.3527Z"
+                                        fill="#72BF40" />
+                                    <path
+                                        d="M12.7056 14.1177H29.6468V18.353H12.7056V14.1177ZM8.47034 21.1765H33.8821V25.4118H8.47034V21.1765ZM4.23505 28.2353H38.1174V32.4706H4.23505V28.2353Z"
+                                        fill="white" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_121_19">
+                                        <rect width="42.353" height="48" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <p> <span>Made by</span> <br>
+                                Power Elite author
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="coach-section">
+            <div class="coach_back">
+                <img src="./assets/coach/left_bg.svg" alt="">
+            </div>
+            <div class="coach_back">
+                <img src="./assets/coach/right_bg.svg" alt="">
+            </div>
+            <div class="container container-coach row">
+                <div class="coach_left col-item col-6">
+                    <div class="coach_left_content">
+                        <img src="./assets/coach/image_4257.png" alt="">
+                    </div>
+                </div>
+                <div class="coach_right col-item col-6">
+                    <div class="content ">
+                        <h3>
+                            Commerce Coach <br> <span class="special"> Certificate from Shopify </span>
+                        </h3>
+                        <p>
+                            Welcome to Ocolus, the sleek and versatile Shopify theme that <br>
+                            empowers businesses with a modernized design, seamless user<br>
+                            experience, and trendsetting features. Elevate your online<br>
+                            store with Ocolus today.
+                        </p>
+                        <div class="btn-group">
+                            <a class="btn">See certificate page</a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
+
 </html>
