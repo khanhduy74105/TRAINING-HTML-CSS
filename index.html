@@ -7,10 +7,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Roboto&family=Tilt+Neon&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./styles/common.css">
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/grid-style.css">
+    <link rel="stylesheet" href="./styles/common.css">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles/respons.css">
     <title>Document</title>
 </head>
 
@@ -74,20 +75,26 @@
                 </label>
             </div>
         </div>
-        <div class="container ">
+        <div class="container">
             <div id="header" class="row">
+                <label class="header-menu" for="checkbox-menu">
+                    <span class="material-icons">
+                        menu
+                    </span>
+                </label>
                 <div class="col-2">
                     <img src="./assets/ocolus-logo.svg" alt="logo">
                 </div>
 
+                <input type="checkbox" id="checkbox-menu">
                 <ul class="header_catalog col-8">
                     <li><a href="#">Demos</a></li>
-                    <li><a href="#">Special Deal</a><span class="bg-green">New</span></li>
+                    <li><a href="#">Special Deal<span class="bg-green">New</span></a></li>
                     <li><a href="#">25+ Sections</a></li>
                     <li><a href="#">Ecommerce</a></li>
                     <li><a href="#">Features</a></li>
                     <li><a href="#">Support</a></li>
-                    <li><a href="#">Open store free</a> <span class="bg-red">New</span></li>
+                    <li><a href="#">Open store free <span class="bg-red">New</span></a></li>
                 </ul>
 
                 <div class="col-2 purchase-btn-wrapper">
@@ -183,7 +190,7 @@
             <div class="coach_back">
                 <img src="./assets/coach/right_bg.svg" alt="">
             </div>
-            <div class="container-coach row">
+            <div class="container-coach row container">
                 <div class="coach_left col-item col-6">
                     <div class="coach_left_content">
                         <img src="./assets/coach/image_4257.png" alt="">
@@ -978,51 +985,55 @@
             </div>
         </section>
         <section class="ecomposer-section">
-            <div class="ecomposer-header">
-                <h5 class="sub-title">
-                    Get our App
-                </h5>
+            <div class="container">
 
-                <h4>
-                    EComposer
-                </h4>
-                <h3>Advanced Page Builder
-                </h3>
-            </div>
-            <div class="container-ecomposer">
-                <div class="ecomposer-dots">
-                    <img src="./assets/ecomposer/icon.png" alt="">
+
+                <div class="ecomposer-header">
+                    <h5 class="sub-title">
+                        Get our App
+                    </h5>
+
+                    <h4>
+                        EComposer
+                    </h4>
+                    <h3>Advanced Page Builder
+                    </h3>
                 </div>
-                <div class="ecomposer-dots">
-                    <img src="./assets/ecomposer/icon.png" alt="">
-                </div>
-                <div class="ecomposer-dots">
-                    <img src="./assets/ecomposer/icon.png" alt="">
-                </div>
-                <div class="row">
-                    <div class="ecomposer-video-wrapper col-item col-10">
-                        <img src="./assets/ecomposer/ecom.png" alt="">
-                        <a href="https://www.youtube.com/watch?v=5oxt-o9gFCs"><span class="material-icons">
-                                play_arrow
-                            </span></a>
+                <div class="container-ecomposer">
+                    <div class="ecomposer-dots">
+                        <img src="./assets/ecomposer/icon.png" alt="">
                     </div>
+                    <div class="ecomposer-dots">
+                        <img src="./assets/ecomposer/icon.png" alt="">
+                    </div>
+                    <div class="ecomposer-dots">
+                        <img src="./assets/ecomposer/icon.png" alt="">
+                    </div>
+                    <div class="row">
+                        <div class="ecomposer-video-wrapper col-item col-10">
+                            <img src="./assets/ecomposer/ecom.png" alt="">
+                            <a href="https://www.youtube.com/watch?v=5oxt-o9gFCs"><span class="material-icons">
+                                    play_arrow
+                                </span></a>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
+                <div class="ecomposer-footer">
+                    <h5>Exclusive Offer for The4 buyers: Get EComposer Partner Plan FREE for 6 months!
+                    </h5>
 
-            <div class="ecomposer-footer">
-                <h5>Exclusive Offer for The4 buyers: Get EComposer Partner Plan FREE for 6 months!
-                </h5>
-
-                <div class="ecomposer-searchbox">
-                    <form class="">
-                        <div class="input-border">
-                            <input type="text" placeholder="Some thing...">
-                        </div>
-                        <button class="btn" type="submit">
-                            Free Install
-                        </button>
-                    </form>
+                    <div class="ecomposer-searchbox">
+                        <form class="">
+                            <div class="input-border">
+                                <input type="text" placeholder="Some thing...">
+                            </div>
+                            <button class="btn" type="submit">
+                                Free Install
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1137,164 +1148,161 @@
                 </div>
             </div>
         </section>
-        <section class="experi-section container">
-            <div class="experi-header">
-                <div class="experi-icons">
-                    <img src="./assets/experi/ico.png" alt="">
-                </div>
-                <div class="experi-icons">
-                    <img src="./assets/experi/ico_2.png" alt="">
-                </div>
-                <h4>
-                    Experience the best with our <br>
-                    <span class="special">premium and exclusive features.</span>
-                </h4>
-                <p>
-                    <b>Supercharge your eCommerce with Ocolus!</b> Import, design, <br> customize, and launch your
-                    online store
-                    effortlessly. No coding
-                    <br> required. Unleash your creativity and thrive!
-                </p>
-            </div>
-            <div class="experi-content">
-                <div class="row">
-                    <div class="col-item col-4 experi-items">
-                        <img src="./assets/experi/1.png" alt="">
-                        <div class="">
-                            <h4>Power Elite Author <br>
-                                <div><span>on</span>
-                                    <img src="./assets//experi/evanto_2.png" alt="">
-                                </div>
-                            </h4>
-                        </div>
+        <section class="experi-section ">
+            <div class="container">
+                <div class="experi-header">
+                    <div class="experi-icons">
+                        <img src="./assets/experi/ico.png" alt="">
                     </div>
-                    <div class="col-8 experi-items col-item">
-                        <img src="./assets/experi/2.png" alt="">
-                        <div class="">
-                            <h3 class="special">25+</h3>
-                            <h4>Exclusive Sections</h4>
-                            <p>
-                                Elevate your online store with professionally <br>
-                                designed, exclusive sections.
+                    <div class="experi-icons">
+                        <img src="./assets/experi/ico_2.png" alt="">
+                    </div>
+                    <h4>
+                        Experience the best with our <br>
+                        <span class="special">premium and exclusive features.</span>
+                    </h4>
+                    <p>
+                        <b>Supercharge your eCommerce with Ocolus!</b> Import, design, <br> customize, and launch your
+                        online store
+                        effortlessly. No coding
+                        <br> required. Unleash your creativity and thrive!
+                    </p>
+                </div>
+                <div class="experi-content">
+                    <div class="row">
+                        <div class="col-item col-4 experi-items col-lg-6">
+                            <img src="./assets/experi/1.png" alt="">
+                            <div class="">
+                                <h4>Power Elite Author <br>
+                                    <div><span>on</span>
+                                        <img src="./assets//experi/evanto_2.png" alt="">
+                                    </div>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-8 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/2.png" alt="">
+                            <div class="">
+                                <h3 class="special">25+</h3>
+                                <h4>Exclusive Sections</h4>
+                                <p>
+                                    Elevate your online store with professionally <br>
+                                    designed, exclusive sections.
 
-                            </p>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 experi-items col-item">
-                        <img src="./assets/experi/3.png" alt="">
-                        <div class="">
-                            <h4>Advanced <br>
-                                Swatches</h4>
-                            <p>
-                                Product colors & images swatches <br>
-                                without any additional apps.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6 experi-items col-item">
-                        <img src="./assets/experi/4.png" alt="">
-                        <div class="">
-                            <h4>
-                                Mobile-first <br>
-                                Experience
-                            </h4>
-                            <p>
-                                Provide your visitors the seamless <br>
-                                shopping experience on mobile.
 
-                            </p>
+                        <div class="col-6 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/3.png" alt="">
+                            <div class="">
+                                <h4>Advanced <br>
+                                    Swatches</h4>
+                                <p>
+                                    Product colors & images swatches <br>
+                                    without any additional apps.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-item col-4 experi-items">
-                        <img src="./assets/experi/5.png" alt="">
-                        <div class="">
-                            <h4>Awesome Blogging
-                            </h4>
-                            <p>
-                                Unleash the Awesomeness: <br>
-                                Supercharge Your Blogging Experience
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-item col-4 experi-items">
-                        <img src="./assets/experi/6.png" alt="">
-                        <div class="">
-                            <h4>Unbeatable Minicart
-                            </h4>
-                            <p>
-                                Enhancing the Shopping Experience: <br>
-                                The Power of Ocolus Minicart
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-item col-4 experi-items">
-                        <img src="./assets/experi/7.png" alt="">
-                        <div class="">
-                            <h4>Big Template Libraries
-                            </h4>
-                            <p>
-                                Unlock Infinite Creativity: Explore Our <br>
-                                Expansive Template Libraries
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8 experi-items col-item">
-                        <img src="./assets/experi/8.png" alt="">
-                        <div class="">
-                            <h4>
-                                Enhanced Search <br>
-                                Function
-                            </h4>
-                            <p>
-                                Enhance Functionality for Effortless Exploration
-                            </p>
-                        </div>
-                    </div>
+                        <div class="col-6 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/4.png" alt="">
+                            <div class="">
+                                <h4>
+                                    Mobile-first <br>
+                                    Experience
+                                </h4>
+                                <p>
+                                    Provide your visitors the seamless <br>
+                                    shopping experience on mobile.
 
-                    <div class="col-item col-4 experi-items">
-                        <img src="./assets/experi/9.png" alt="">
-                        <div class="">
-                            <h4>Countdown Timer</h4>
-                            <p>
-                                Drive Engagement with <br>
-                                Countdown Timers
-                            </p>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-6 experi-items col-item">
-                        <img src="./assets/experi/10.png" alt="">
-                        <div class="">
-                            <h4>
-                                Mobile-first <br>
-                                Experience
-                            </h4>
-                            <p>
-                                Provide your visitors the seamless <br>
-                                shopping experience on mobile.
-
-                            </p>
+                        <div class="col-item col-4 experi-items col-lg-6">
+                            <img src="./assets/experi/5.png" alt="">
+                            <div class="">
+                                <h4>Awesome Blogging
+                                </h4>
+                                <p>
+                                    Unleash the Awesomeness: <br>
+                                    Supercharge Your Blogging Experience
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6 experi-items col-item">
-                        <img src="./assets/experi/11.png" alt="">
-                        <div class="down">
-                            <h4>
-                                Mobile-first <br>
-                                Experience
-                            </h4>
-                            <p>
-                                Provide your visitors the seamless <br>
-                                shopping experience on mobile.
-                            </p>
+                        <div class="col-item col-4 experi-items col-lg-6">
+                            <img src="./assets/experi/6.png" alt="">
+                            <div class="">
+                                <h4>Unbeatable Minicart
+                                </h4>
+                                <p>
+                                    Enhancing the Shopping Experience: <br>
+                                    The Power of Ocolus Minicart
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-item col-4 experi-items col-lg-6">
+                            <img src="./assets/experi/7.png" alt="">
+                            <div class="">
+                                <h4>Big Template Libraries
+                                </h4>
+                                <p>
+                                    Unlock Infinite Creativity: Explore Our <br>
+                                    Expansive Template Libraries
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-8 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/8.png" alt="">
+                            <div class="">
+                                <h4>
+                                    Enhanced Search <br>
+                                    Function
+                                </h4>
+                                <p>
+                                    Enhance Functionality for Effortless Exploration
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-item col-4 experi-items col-lg-6">
+                            <img src="./assets/experi/9.png" alt="">
+                            <div class="">
+                                <h4>Countdown Timer</h4>
+                                <p>
+                                    Drive Engagement with <br>
+                                    Countdown Timers
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-6 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/10.png" alt="">
+                            <div class="">
+                                <h4>
+                                    Mobile-first <br>
+                                    Experience
+                                </h4>
+                                <p>
+                                    Provide your visitors the seamless <br>
+                                    shopping experience on mobile.
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6 experi-items col-lg-6 col-item">
+                            <img src="./assets/experi/11.png" alt="">
+                            <div>
+                                <h4>
+                                    Mobile-first <br>
+                                    Experience
+                                </h4>
+                                <p>
+                                    Provide your visitors the seamless <br>
+                                    shopping experience on mobile.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1378,65 +1386,68 @@
             </div>
         </section>
         <section class="videos-section">
-            <h4 class="videos-header">
-                See what people are saying about <span class="special">The4's themes</span>
-            </h4>
+            <div class="container">
+                <h4 class="videos-header">
+                    See what people are saying about <span class="special">The4's themes</span>
+                </h4>
 
-            <div class="row container">
-                <div class="col-item col-4 video-item">
-                    <div class="">
-                        <div class="video-img-wrapper">
-                            <img src="./assets/videos-thumb/1.png" alt="">
-                            <a href="">
-                                <span class="material-icons">
-                                    play_arrow
-                                </span>
-                            </a>
+                <div class="row">
+                    <div class="col-item col-4 video-item">
+                        <div class="">
+                            <div class="video-img-wrapper">
+                                <img src="./assets/videos-thumb/1.png" alt="">
+                                <a href="">
+                                    <span class="material-icons">
+                                        play_arrow
+                                    </span>
+                                </a>
+                            </div>
+                            <a href="" class="tolink">Tyler Wisniewski</a>
+                            <p>"Tyler has been using Kalles since the very
+                                <br>
+                                beginning and he is completely satisfied with..
+                            </p>
+
                         </div>
-                        <a href="" class="tolink">Tyler Wisniewski</a>
-                        <p>"Tyler has been using Kalles since the very
-                            <br>
-                            beginning and he is completely satisfied with..
-                        </p>
-
                     </div>
-                </div>
-                <div class="col-item col-4 video-item">
-                    <div class="">
-                        <div class="video-img-wrapper">
-                            <img src="./assets/videos-thumb/2.png" alt="">
-                            <a href="">
-                                <span class="material-icons">
-                                    play_arrow
-                                </span>
-                            </a>
+                    <div class="col-item col-4 video-item">
+                        <div class="">
+                            <div class="video-img-wrapper">
+                                <img src="./assets/videos-thumb/2.png" alt="">
+                                <a href="">
+                                    <span class="material-icons">
+                                        play_arrow
+                                    </span>
+                                </a>
+                            </div>
+                            <a href="" class="tolink">Alice Yu</a>
+                            <p>
+                                "Alice Yu is part of a wireless headset startup. <br>She chose Kalles because of its
+                                minimalist design,...
+                            </p>
+
                         </div>
-                        <a href="" class="tolink">Alice Yu</a>
-                        <p>
-                            "Alice Yu is part of a wireless headset startup. <br>She chose Kalles because of its
-                            minimalist design,...
-                        </p>
-
                     </div>
-                </div>
-                <div class="col-item col-4 video-item">
-                    <div class="">
-                        <div class="video-img-wrapper">
-                            <img src="./assets/videos-thumb/3.png" alt="">
-                            <a href="">
-                                <span class="material-icons">
-                                    play_arrow
-                                </span>
-                            </a>
+                    <div class="col-item col-4 video-item">
+                        <div class="">
+                            <div class="video-img-wrapper">
+                                <img src="./assets/videos-thumb/3.png" alt="">
+                                <a href="">
+                                    <span class="material-icons">
+                                        play_arrow
+                                    </span>
+                                </a>
+                            </div>
+                            <a href="" class="tolink">Mohamed Abo Jad</a>
+                            <p>
+                                "Mohamed Abo Jad - owner of the Butikkom <br>brand used Kalles Theme for their online
+                                store.
+                            </p>
+
                         </div>
-                        <a href="" class="tolink">Mohamed Abo Jad</a>
-                        <p>
-                            "Mohamed Abo Jad - owner of the Butikkom <br>brand used Kalles Theme for their online store.
-                        </p>
-
                     </div>
-                </div>
 
+                </div>
             </div>
         </section>
         <section class="question-section">

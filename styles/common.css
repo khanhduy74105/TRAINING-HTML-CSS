@@ -1,6 +1,7 @@
 .container {
   width: 100%;
-  padding: 0 100px;
+  margin: auto;
+  max-width: 1620px;
 }
 a {
   text-decoration: none;
@@ -56,10 +57,10 @@ p {
   cursor: pointer;
   border-radius: 54px;
   font-size: 14px;
-  line-height: 1;
   font-weight: 600;
   background-color: var(--button-color);
   color: white;
+  line-height: 1;
 }
 .btn.lg {
   padding: 16px 64px;
@@ -73,6 +74,7 @@ p {
   border: 2px solid var(--button-color);
   color: var(--button-color);
   background-color: transparent;
+  padding: 14px 32px;
 }
 .btn-outline:hover {
   background-color: var(--button-color);

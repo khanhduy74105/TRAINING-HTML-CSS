@@ -112,7 +112,6 @@ header > div {
   font-size: 12px;
 }
 
-
 /* header */
 #header {
   max-width: 1620px;
@@ -154,6 +153,10 @@ header > div {
   font-size: 10px;
   transform: translateY(-75%);
   color: white;
+}
+#header input,
+#header .header-menu {
+  display: none;
 }
 .bg-red {
   background-color: rgba(201, 31, 40, 1);
@@ -331,10 +334,11 @@ header > div {
 /* coach section */
 
 .coach-section {
-  height: 500px;
   position: relative;
 }
-
+.coach-section img {
+  width: 100%;
+}
 .coach_back {
   position: absolute;
 }
@@ -350,7 +354,9 @@ header > div {
 }
 
 .container-coach {
-  padding: 0 246px;
+  width: 100%;
+  margin: auto;
+  max-width: 1410px;
 }
 .coach_left {
   position: relative;
@@ -379,9 +385,8 @@ header > div {
   justify-content: center;
   align-items: center;
 }
-.coach_left_content img {
+.coach-section .coach_left_content img {
   width: 100%;
-  transform: translateX(-70px);
 }
 
 .coach_right {
@@ -392,6 +397,7 @@ header > div {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  white-space: nowrap;
 }
 .coach_right .content h3 {
   font-size: 40px;
@@ -516,7 +522,8 @@ header > div {
 .demos-content .demos-item img {
   width: 100%;
   height: 260px;
-  object-position: top center;
+  object-fit: cover;
+  object-position: center center;
 }
 .demos-content .demos-item .wrapper {
   padding: 16px;
@@ -525,7 +532,7 @@ header > div {
   margin-bottom: 32px;
   transition: transform 300ms;
   background-color: white;
-  box-shadow: 2px 2px 4px #e5eeeea8,-2px -2px 4px #e5eeeea8;
+  box-shadow: 2px 2px 4px #e5eeeea8, -2px -2px 4px #e5eeeea8;
 }
 
 .demos-content .demos-item .wrapper > div {
@@ -860,6 +867,10 @@ header > div {
   transform: translateY(-50%);
   margin-left: 54px;
 }
+.experi-section .experi-items.col-8 img,
+.experi-section .experi-items.col-6 img {
+  height: 100%;
+}
 .experi-content .experi-items.col-4 > div,
 .experi-content .experi-items.col-6 > div.down {
   position: absolute;
@@ -1181,6 +1192,7 @@ footer .btn div {
 }
 footer .btn div span:nth-child(1) {
   font-size: 40px;
+  display: block;
 }
 footer .btn div span:nth-child(2) {
   text-decoration: line-through;
@@ -1206,6 +1218,7 @@ footer .btn-normal {
   font-size: 14px;
   font-weight: normal;
   gap: 4px;
+  white-space: nowrap;
 }
 .fixed.btn span {
   font-weight: bold;
