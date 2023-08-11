@@ -121,13 +121,12 @@
     padding: 16px;
   }
   /* Video section */
-  .videos-section  .row {
+  .videos-section .row {
     margin-left: -12px;
     margin-right: -12px;
   }
   .videos-section .video-item {
     width: 50%;
-
   }
 }
 
@@ -304,8 +303,16 @@
   .useful-section .useful-header h4 {
     font-size: 30px;
   }
+  .useful-section .useful-header {
+    max-width: 100%;
+    overflow-x: auto;
+  }
   .useful-section .useful-items {
     width: 50%;
+  }
+  .useful-section .useful-header ul {
+    justify-content: start;
+    white-space: nowrap;
   }
   .useful-section p {
     max-width: 100%;
@@ -324,7 +331,6 @@
     font-size: 24px;
   }
 
-  
   /* Ready section */
   .ready-section .special {
     font-size: 70px;
@@ -388,6 +394,10 @@
     padding: 10px 24px;
   }
 
+  header #header #purchase-btn span:nth-child(1){
+    display: none;
+  }
+
   /* reason-section */
   .reason-section .reason-title {
     padding: 0 30px;
@@ -445,13 +455,17 @@
   .ecomposer-section .ecomposer-searchbox form .input-border {
     margin-bottom: 16px;
   }
+  .ecomposer-section .ecomposer-searchbox form input {
+    max-width: 100%;
+    width: 100%;
+  }
   /* Usefull section */
   .useful-section .useful-items {
     width: 100%;
     margin-top: 16px;
   }
-  
-  .useful-section .useful-content  .row {
+
+  .useful-section .useful-content .row {
     gap: 8px;
   }
   .useful-section .useful-items-wrapper {
@@ -459,7 +473,7 @@
   }
 
   /* Experi section */
-  .experi-section .experi-items{
+  .experi-section .experi-items {
     width: 100%;
   }
   .experi-section .experi-items.col-6 div {
@@ -469,11 +483,23 @@
     right: unset;
     transform: translateX(-50%);
     margin-left: unset;
-
   }
   .experi-section .experi-items h4,
-  .experi-section .experi-items p{
+  .experi-section .experi-items p {
     text-align: center;
+  }
+  .experi-section .experi-items h4 {
+    font-size: 20px;
+  }
+  .experi-section .experi-items p {
+    font-size: 14px;
+    white-space: normal;
+  }
+  .experi-section .experi-items br {
+    display: none;
+  }
+  .experi-content .experi-items.col-8 > div{
+    margin-left: unset;
   }
   .experi-section .special {
     white-space: normal;
@@ -493,17 +519,17 @@
   .videos-section .videos-header br {
     display: none;
   }
-  .videos-section  .video-item {
+  .videos-section .video-item {
     width: 100%;
   }
-  .videos-section  .video-item  p{
+  .videos-section .video-item p {
     text-align: center;
   }
   /* question-section */
   .question-section h4 {
     font-size: 29px;
     margin-bottom: 36px;
-  } 
+  }
   .question-section .question-item .header > div span {
     font-size: 18px;
   }
@@ -528,6 +554,26 @@
     font-size: 14px;
   }
   .fixed.btn {
+    display: none;
+  }
+  footer .btn-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  footer .footer-title {
+    white-space: normal;
+  }
+  footer .footer-title br {
+    display: none;
+  }
+  footer > div {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 468px) {
+  header #header #purchase-btn{
     display: none;
   }
 }
