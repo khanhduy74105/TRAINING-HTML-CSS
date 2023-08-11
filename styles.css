@@ -112,10 +112,7 @@ header > div {
   font-size: 12px;
 }
 
-.container {
-  width: 100%;
-  padding: 0 100px;
-}
+
 /* header */
 #header {
   max-width: 1620px;
@@ -528,6 +525,7 @@ header > div {
   margin-bottom: 32px;
   transition: transform 300ms;
   background-color: white;
+  box-shadow: 2px 2px 4px #e5eeeea8,-2px -2px 4px #e5eeeea8;
 }
 
 .demos-content .demos-item .wrapper > div {
@@ -993,7 +991,9 @@ header > div {
   color: black;
   padding-top: 90px;
 }
-
+.videos-section .row.container {
+  margin: 0 -12px;
+}
 .videos-header {
   text-align: center;
   font-size: 40px;
