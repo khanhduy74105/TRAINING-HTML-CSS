@@ -95,6 +95,10 @@
   .container {
     max-width: 960px;
   }
+  header .top-wrapper .top-popup{
+    justify-content: center;
+    gap: 16px;
+  }
   /* Banner section */
   .banner-section {
     height: 750px;
