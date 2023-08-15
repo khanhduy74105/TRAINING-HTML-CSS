@@ -1,3 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-size: 16px;
+}
+main,
+header,
+section,
+footer {
+  width: 100%;
+  position: relative;
+}
+section {
+  margin-bottom: 120px;
+}
+html {
+  height: 100%;
+}
 .container {
   width: 100%;
   margin: auto;
@@ -61,6 +85,7 @@ p {
   background-color: var(--button-color);
   color: white;
   line-height: 1;
+  user-select: none;
 }
 .btn.lg {
   padding: 16px 64px;

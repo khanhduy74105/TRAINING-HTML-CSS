@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Roboto&family=Tilt+Neon&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles/grid-style.css">
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/products.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <main style="position:  relative;">
+        <section class="products-section">
+            <div class="products-header-wrapper container">
+                <ul class="products-header">
+                    <li><a href="#" class="active">sofas</a></li>
+                    <li><a href="#">chairs</a></li>
+                    <li><a href="#">tables</a></li>
+                    <li><a href="#">storage</a></li>
+                    <li><a href="#">beds</a></li>
+                    <li><a href="#">accessories</a></li>
+                </ul>
+            </div>
+            <div class="container">
+                <div class="row" id="products-row">
+                    <div class="col-item col-4">
+                        <div class="product_item">
+                            <div class="product_wrapper">
+                                <img src="./assets/products/1.webp" alt="">
+
+                                <div class="product_wrapper--layout">
+                                    <img src="./assets/products/3.webp" alt="">
+
+                                    <div class="interactions">
+                                        <span class="material-icons">
+                                            favorite_border
+                                        </span>
+                                        <span class="material-icons">
+                                            swap_horiz
+                                        </span>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button>Quick view</button>
+                                        <button>Add to cart</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product_item--title">
+                                <span>Eddie 2 deatewr sofa, andie antracit</span>
+                                <span>$ 300</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <input type="checkbox" name="" id="cart-checkbox">
+        <div id="cart-layout">
+            <div class="cart-section">
+                <div class="cart-header">
+                    <h4>Your cart</h4>
+                    <label for="cart-checkbox">
+                        <span class="material-icons">
+                            close
+                        </span>
+                    </label>
+                </div>
+
+                <div class="cart-products">
+
+                </div>
+
+                <div class="cart-labels">
+                    <div>
+                        <span class="material-icons">
+                            note_alt
+                        </span>
+                    </div>
+                    <div>
+                        <span class="material-icons">
+                            card_giftcard
+                        </span>
+                    </div>
+                    <div>
+                        <span class="material-icons">
+                            local_shipping
+                        </span>
+                    </div>
+                    <div class="">
+                        <span class="material-icons">
+                            local_offer
+                        </span>
+                    </div>
+                </div>
+
+                <div class="cart-slider">
+                    <h6>You may also like</h6>
+                    <div class="slider">
+                        <div class="slide row">
+                            <img src="./assets/products/1.webp" alt="" class="col-4">
+                            <div class="content col-8">
+                                <p>Danseka design sofa</p>
+                                <span>550 $</span>
+                            </div>
+                        </div>
+                        <div class="slide row">
+                            <img src="./assets/products/3.webp" alt="" class="col-4">
+                            <div class="content col-8">
+                                <p>Lorem ipsum dolor snt exri </p>
+                                <span>550 $</span>
+                            </div>
+                        </div>
+                        <div class="slide row">
+                            <img src="./assets/products/4.webp" alt="" class="col-4">
+                            <div class="content col-8">
+                                <p>Magnam laborum adipisci.</p>
+                                <span>550 $</span>
+                            </div>
+                        </div>
+                        <div class="slide row">
+                            <img src="./assets/products/7.webp" alt="" class="col-4">
+                            <div class="content col-8">
+                                <p>Amet consectetur adipisicing elit</p>
+                                <span>550 $</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-control">
+                        <div class="back-btn btn">
+                            <span class="material-icons">
+                                arrow_back_ios
+                            </span>
+                        </div>
+                        <div class="dots">
+                            <span class="choosen"></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="next-btn btn">
+                            <span class="material-icons">
+                                arrow_forward_ios
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-subtotal">
+                    <div class="subtotal-header">
+                        <span>Subtotal</span>
+                        <span class="subtotal-price">$ 5000</span>
+                    </div>
+                    <p>Taxes and shipping calculated at checkout</p>
+                    <div>
+                        <input type="checkbox" name="" id=" ">
+                        <span>I agree with the terms and conditions.</span>
+                    </div>
+                    <div class="">
+                        <div class="btn">View cart</div>
+                        <div class="btn">Check out</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/products.js">
+
+    </script>
+</body>
+
+</html>
