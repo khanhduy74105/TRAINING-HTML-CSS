@@ -287,13 +287,13 @@
 }
 
 #cart-layout .cart-subtotal {
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   bottom: 0;
-  right: 0;
   padding: 16px;
   border-top: 1px solid gray;
   background-color: white;
-  width: 500px;
+  width: 100%;
 }
 
 #cart-layout .cart-subtotal .subtotal-header {
