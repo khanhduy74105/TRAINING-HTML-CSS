@@ -148,6 +148,7 @@
   width: 500px;
   overflow-y: auto;
   position: relative;
+  height: 100vh;
 }
 
 #cart-layout .cart-section .cart-header {
@@ -286,12 +287,13 @@
 }
 
 #cart-layout .cart-subtotal {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
-  left: 0;
   padding: 16px;
   border-top: 1px solid gray;
+  background-color: white;
+  width: 500px;
 }
 
 #cart-layout .cart-subtotal .subtotal-header {
