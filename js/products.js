@@ -169,6 +169,14 @@ const main = function () {
       `.cart-products-item.product_${id}`
     );
     currentCartItem.remove()
+
+    const newCartItems = getCartProducts();
+    let price = newCartItems.reduce((total, current) => {
+      return total + current.item.price * current.amount;
+    }, 0);
+    document.querySelector(
+      ".cart-section .cart-subtotal .subtotal-price"
+    ).innerHTML = `$ ${price}`;
   };
   // listener DOM event function
   const listenerHideCartLayout = () => {
