@@ -165,7 +165,10 @@ const main = function () {
     }
     const trueCart = cartItems.filter((item) => item.item.id !== id);
     localStorage.setItem("cart", JSON.stringify(trueCart));
-    fillToCart();
+    const currentCartItem = document.querySelector(
+      `.cart-products-item.product_${id}`
+    );
+    currentCartItem.remove()
   };
   // listener DOM event function
   const listenerHideCartLayout = () => {
@@ -350,7 +353,7 @@ const main = function () {
     }
   };
 
-  
+
   fillProducts();
   fillToCart();
   fillSlider();
