@@ -148,7 +148,7 @@
   width: 500px;
   overflow-y: auto;
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #cart-layout .cart-section .cart-header {
