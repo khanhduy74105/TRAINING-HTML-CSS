@@ -1,0 +1,23 @@
+{
+  "name": "jsonserver-test",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "render-data": "node render-data.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "cors": "^2.8.5",
+    "faker": "^6.6.6",
+    "json-server": "^0.17.3"
+  }
+}
