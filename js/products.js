@@ -1,113 +1,153 @@
-const main = function () {
-  // crud function
-  const fetchProducts = async () => {
-    const products = [
-      {
-        id: 1,
-        name: "Eddie, 2-seater sofa, Andie antracit",
-        price: 300,
-        images: ["1.webp", "5.webp"],
-      },
-      {
-        id: 2,
-        name: "Flynn, 2-seater sofa, Sunday Dusty Rose",
-        price: 251,
-        images: ["3.webp", "4.webp"],
-      },
-      {
-        id: 3,
-        name: "Herman, 2-seater sofa, Hilton Dolphin",
-        price: 1244,
-        images: ["4.webp", "3.webp"],
-      },
-      {
-        id: 4,
-        name: "3-seater sofa w/ chaiselong",
-        price: 552,
-        images: ["5.webp", "1.webp"],
-      },
-      {
-        id: 5,
-        name: "Conrad, 3-seater sofa Andie Stone",
-        price: 600,
-        images: ["6.webp", "7.webp"],
-      },
-      {
-        id: 6,
-        name: "Conrad, 3-seater sofa Velour Navy",
-        price: 700,
-        images: ["1.webp", "5.webp"],
-      },
-    ];
+const main = async function () {
+  let products = [];
+  let cartItems = [];
+  const ls = localStorage;
+  const synchCartItems = () => {
+    ls.setItem("cart", JSON.stringify(cartItems));
+    synchSubtotalPrice();
+  };
 
-    return products;
-  };
-  const getCartProducts = () => {
-    const ls = localStorage;
-    let currentItems = ls.getItem("cart") ? JSON.parse(ls.getItem("cart")) : [];
-    return currentItems;
-  };
-  const addToCart = (item) => {
-    const ls = localStorage;
-    let currentItems = ls.getItem("cart") ? JSON.parse(ls.getItem("cart")) : [];
-    if (currentItems.find((currentItem) => item.id === currentItem.item.id)) {
-      currentItems = currentItems.map((currentItem) => {
-        if (currentItem.item.id === item.id) {
-          return {
-            ...currentItem,
-            item: { ...currentItem.item },
-            amount: currentItem.amount + 1,
-          };
-        } else {
-          return currentItem;
+  const synchSubtotalPrice = () => {
+    let price = cartItems.reduce((total, current) => {
+      return total + current.item.price * current.amount;
+    }, 0);
+    fetch("http://localhost:3000/api/cart_subtotal", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        value: price,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          document.querySelector(
+            ".cart-section .cart-subtotal .subtotal-price"
+          ).innerHTML = `$ ${price}`;
         }
       });
-      ls.setItem("cart", JSON.stringify(currentItems));
-    } else {
-      currentItems.push({ item, amount: 1 });
-      ls.setItem("cart", JSON.stringify(currentItems));
-    }
+  };
+  // crud function
+  const fetchProducts = async () => {
+    document
+      .querySelector(".products-section .loading-spinner-products")
+      .classList.add("show");
+    const response = await fetch("http://localhost:3000/api/products", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    products = data;
+    document
+      .querySelector(".products-section .loading-spinner-products")
+      .classList.remove("show");
+  };
 
+  const fetchCartItems = async () => {
+    document.querySelector("#cart-layout .cart-loader").classList.add("show");
+    const respone = await fetch("http://localhost:3000/api/your_cart");
+    const data = await respone.json();
+    const promisesItem = data.map(
+      (cartItem) =>
+        new Promise((resolve, reject) => {
+          fetch(`http://localhost:3000/api/products/${cartItem.id}`)
+            .then((res) => res.json())
+            .then((data) => resolve({ item: data, amount: cartItem.quantity }));
+        })
+    );
+
+    await Promise.all(promisesItem).then((datas) => {
+      cartItems = datas;
+      synchCartItems();
+      document
+        .querySelector("#cart-layout .cart-loader")
+        .classList.remove("show");
+    });
+  };
+
+  const addToCart = async (e, item) => {
+    e.target.querySelector(".loader-spinner").classList.add("show");
+
+    const respone = await fetch("http://localhost:3000/api/your_cart/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: item.id,
+      }),
+    });
+
+    const data = await respone;
+    if (!data) {
+      return;
+    }
+    e.target.querySelector(".loader-spinner").classList.remove("show");
     document.getElementById("cart-checkbox").checked = false;
+    await fetchCartItems();
     fillToCart();
   };
-  const updateAmount = (item) => {
-    const cartItems = getCartProducts();
+
+  const updateAmount = async (item) => {
     if (!cartItems) {
       return;
     }
+
     if (item.amount <= 0) {
       removeProduct(item.item.id);
       return;
     }
 
-    const cartsNew = cartItems.map((currentItem) => {
-      if (currentItem.item.id === item.item.id) {
-        return {
-          ...currentItem,
-          item: { ...currentItem.item },
-          amount: item.amount,
-        };
+    document
+      .querySelector(
+        `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+      )
+      .classList.add("show");
+    const respone = await fetch(
+      `http://localhost:3000/api/your_cart/update/${item.item.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quantity: item.amount,
+        }),
       }
+    );
 
-      return currentItem;
-    });
+    const data = await respone.json();
+    if (data.success) {
+      cartItems = cartItems.map((currentItem) => {
+        if (currentItem.item.id === item.item.id) {
+          return {
+            ...currentItem,
+            item: { ...currentItem.item },
+            amount: item.amount,
+          };
+        }
 
-    localStorage.setItem("cart", JSON.stringify(cartsNew));
+        return currentItem;
+      });
+
+      synchCartItems();
+      document
+        .querySelector(
+          `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+        )
+        .classList.remove("show");
+    }
 
     //
     const currentCartItem = document.querySelector(
       `.cart-products-item.product_${item.item.id}`
     );
-    currentCartItem.innerHTML = `
-    <div class="img-wrapper col-4 col-item">
-                              <img src="./assets/products/${item.item.images[0]}" alt="">
-                          </div>
-  
-                          <div class="item-content col-7 col-item">
-                              <p>${item.item.name} </p>
-                              <span>$ ${item.item.price} </span>
-                              <div class="amount-box">
+
+    currentCartItem.querySelector(".amount-box").innerHTML = `
                                   <button class="decrease-btn">
                                       <span class="material-icons">
                                           arrow_back_ios
@@ -118,15 +158,7 @@ const main = function () {
                                       <span class="material-icons">
                                           arrow_forward_ios
                                       </span>
-                                  </button>
-                              </div>
-                          </div>
-                          <div class="col-1 col-item">
-                              <span class="material-icons">
-                                  close
-                              </span>
-                          </div>
-    `;
+                                  </button>`;
     currentCartItem
       .querySelector(".amount-box .increase-btn")
       .addEventListener("click", function () {
@@ -148,35 +180,37 @@ const main = function () {
         const amount = currentCartItem.querySelector(".amount-box input").value;
         updateAmount({ ...item, amount: parseInt(amount) });
       });
-
-    const newCartItems = getCartProducts();
-
-    let price = newCartItems.reduce((total, current) => {
-      return total + current.item.price * current.amount;
-    }, 0);
-    document.querySelector(
-      ".cart-section .cart-subtotal .subtotal-price"
-    ).innerHTML = `$ ${price}`;
   };
-  const removeProduct = (id) => {
-    const cartItems = getCartProducts();
+  const removeProduct = async (id) => {
     if (!cartItems) {
       return;
     }
-    const trueCart = cartItems.filter((item) => item.item.id !== id);
-    localStorage.setItem("cart", JSON.stringify(trueCart));
+
     const currentCartItem = document.querySelector(
       `.cart-products-item.product_${id}`
     );
-    currentCartItem.remove()
+    currentCartItem
+      .querySelector(`.img-wrapper .loader-spinner-wrapper`)
+      .classList.add("show");
+    const respone = await fetch(
+      `http://localhost:3000/api/your_cart/remove/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    const newCartItems = getCartProducts();
-    let price = newCartItems.reduce((total, current) => {
-      return total + current.item.price * current.amount;
-    }, 0);
-    document.querySelector(
-      ".cart-section .cart-subtotal .subtotal-price"
-    ).innerHTML = `$ ${price}`;
+    const data = await respone.json();
+    if (data.success) {
+      cartItems = cartItems.filter((item) => item.item.id !== id);
+      currentCartItem
+        .querySelector(`.img-wrapper .loader-spinner-wrapper`)
+        .classList.remove("show");
+      currentCartItem.remove();
+      synchCartItems();
+    }
   };
   // listener DOM event function
   const listenerHideCartLayout = () => {
@@ -191,7 +225,6 @@ const main = function () {
       });
   };
   const fillToCart = () => {
-    const cartItems = getCartProducts();
     if (!cartItems) {
       return;
     }
@@ -204,9 +237,11 @@ const main = function () {
       newItem.classList.add("row");
       newItem.innerHTML = `
                         <div class="img-wrapper col-4 col-item">
-                              <img src="./assets/products/${currentItem.item.images[0]}" alt="">
+                          <img src="${currentItem.item.images[0]}" alt="">
+                          <div class="loader-spinner-wrapper">
+                            <img src="./assets/90-ring.svg" alt="" class="loader-spinner" >
                           </div>
-  
+                          </div>
                           <div class="item-content col-7 col-item">
                               <p>${currentItem.item.name} </p>
                               <span>$ ${currentItem.item.price} </span>
@@ -253,13 +288,6 @@ const main = function () {
         });
       cartProducts.appendChild(newItem);
     });
-
-    let price = cartItems.reduce((total, current) => {
-      return total + current.item.price * current.amount;
-    }, 0);
-    document.querySelector(
-      ".cart-section .cart-subtotal .subtotal-price"
-    ).innerHTML = `$ ${price}`;
   };
   const settingSlider = (number) => {
     const dots = document.querySelectorAll(
@@ -278,9 +306,8 @@ const main = function () {
     }
   };
   const fillProducts = async () => {
-    const prds = await fetchProducts();
     const row = document.getElementById("products-row");
-    prds.forEach((item) => {
+    products.forEach((item) => {
       const product = document.createElement("div");
       product.classList.add("col-item");
       product.classList.add("col-4");
@@ -288,10 +315,10 @@ const main = function () {
       product.innerHTML = `
             <div class="product_item">
               <div class="product_wrapper">
-                  <img src="./assets/products/${item.images[0]}" alt="">
+                  <img src="${item.images[0]}" alt="">
   
                   <div class="product_wrapper--layout">
-                      <img src="./assets/products//${item.images[1]}" alt="">
+                      <img src="${item.images[1]}" alt="">
   
                       <div class="interactions">
                           <span class="material-icons">
@@ -303,7 +330,7 @@ const main = function () {
                       </div>
                       <div class="btn-group">
                           <button>Quick view</button>
-                          <button>Add to cart</button>
+                          <button class="btn-add-to-cart" style="display:flex; align-items: center; justify-content: center;gap:8px"><img src="./assets/90-ring.svg" alt="" class="loader-spinner" style="width: 16px; height: 16px;">Add to cart</button>
                       </div>
                   </div>
               </div>
@@ -315,13 +342,14 @@ const main = function () {
           </div>
       `;
       product
-        .querySelector(".btn-group button:nth-child(2)")
-        .addEventListener("click", function () {
-          addToCart(item);
+        .querySelector(".btn-group button.btn-add-to-cart")
+        .addEventListener("click", function (e) {
+          addToCart(e, item);
         });
       row.appendChild(product);
     });
   };
+
   const fillSlider = () => {
     let currentSlide = 0;
     settingSlider(currentSlide);
@@ -361,9 +389,8 @@ const main = function () {
     }
   };
 
-
+  await fetchProducts();
   fillProducts();
-  fillToCart();
   fillSlider();
   listenerHideCartLayout();
 };

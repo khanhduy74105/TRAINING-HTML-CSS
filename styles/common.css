@@ -141,3 +141,19 @@ p {
   transform: translateY(-75%);
   color: white;
 }
+
+.loader-spinner {
+  animation: rotate 2s linear infinite;
+  display: none;
+  max-height: 100%;
+}
+
+.loader-spinner.show {
+  display: block;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
