@@ -21,9 +21,9 @@ const main = async function () {
 
   const fetchCartItems = async () => {
     $("#cart-layout .cart-loader").classList.add("show");
-    const promisesItem = await Service.getCartItem();
+    const promisesItem = await Service.getCartItem(cartItems);
     await Promise.all(promisesItem).then((datas) => {
-      cartItems = datas;
+      cartItems = [...cartItems, ...datas];
       synchCartItems();
       $("#cart-layout .cart-loader").classList.remove("show");
     });
@@ -37,6 +37,7 @@ const main = async function () {
     }
     e.target.querySelector(".loader-spinner").classList.remove("show");
     document.getElementById("cart-checkbox").checked = false;
+    $("body").style.overflow = "hidden";
     await fetchCartItems();
     fillToCart();
   };
@@ -142,6 +143,7 @@ const main = async function () {
     const cartLayout = $("#cart-layout");
     cartLayout.addEventListener("click", function () {
       $("#cart-checkbox").checked = true;
+      $("body").style.overflow = "visible";
     });
     $(".cart-section").addEventListener("click", function (e) {
       e.stopPropagation();

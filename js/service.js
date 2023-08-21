@@ -10,18 +10,22 @@ class ProductService {
     return data;
   }
 
-  async getCartItem() {
+  async getCartItem(currentCartItems) {
     const respone = await fetch(`${API_ADDRESS}/your_cart`);
     const data = await respone.json();
-    const promisesItem = data.map(
-      (cartItem) =>
-        new Promise((resolve, reject) => {
+    console.log(currentCartItems, data);
+    const promisesItem = data.map((cartItem) => {
+      if (currentCartItems.find((item) => item.item.id === cartItem.id)) {
+        return null;
+      } else {
+        return new Promise((resolve, reject) => {
           fetch(`http://localhost:3000/api/products/${cartItem.id}`)
             .then((res) => res.json())
             .then((data) => resolve({ item: data, amount: cartItem.quantity }));
-        })
-    );
-    return promisesItem;
+        });
+      }
+    });
+    return promisesItem.filter((item) => item != null);
   }
 
   async getProductById(id) {
