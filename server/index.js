@@ -35,7 +35,6 @@ server.post("/api/your_cart/add", (req, res, next) => {
   const { id } = req.body;
   const item = router.db.get("your_cart").find({ id: id }).value();
 
-  setTimeout(() => {
     if (item) {
       const newItem = router.db
         .get("your_cart")
@@ -56,7 +55,6 @@ server.post("/api/your_cart/add", (req, res, next) => {
 
       res.status(201).json({ success: true, message: "Success", newItem }); // Trả về phản hồi JSON
     }
-  }, 1000);
 });
 
 server.put("/api/your_cart/update/:id", (req, res) => {
