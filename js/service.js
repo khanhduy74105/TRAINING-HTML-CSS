@@ -13,7 +13,6 @@ class ProductService {
   async getCartItem(currentCartItems) {
     const respone = await fetch(`${API_ADDRESS}/your_cart`);
     const data = await respone.json();
-    console.log(currentCartItems, data);
     const promisesItem = data.map((cartItem) => {
       if (currentCartItems.find((item) => item.item.id === cartItem.id)) {
         return null;

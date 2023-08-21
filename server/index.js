@@ -35,28 +35,26 @@ server.post("/api/your_cart/add", (req, res, next) => {
   const { id } = req.body;
   const item = router.db.get("your_cart").find({ id: id }).value();
 
-  setTimeout(() => {
-    if (item) {
-      const newItem = router.db
-        .get("your_cart")
-        .find({ id: id })
-        .assign({ quantity: item.quantity + 1, ...req.body })
-        .write();
+  if (item) {
+    const newItem = router.db
+      .get("your_cart")
+      .find({ id: id })
+      .assign({ quantity: item.quantity + 1, ...req.body })
+      .write();
 
-      res.status(201).json({ success: true, message: "Success", newItem }); // Trả về phản hồi JSON
-    } else {
-      const newItem = router.db
-        .get("your_cart")
-        .push({
-          id: id,
-          quantity: 1,
-          ...req.body,
-        })
-        .write();
+    res.status(201).json({ success: true, message: "Success", newItem }); // Trả về phản hồi JSON
+  } else {
+    const newItem = router.db
+      .get("your_cart")
+      .push({
+        id: id,
+        quantity: 1,
+        ...req.body,
+      })
+      .write();
 
-      res.status(201).json({ success: true, message: "Success", newItem }); // Trả về phản hồi JSON
-    }
-  }, 1000);
+    res.status(201).json({ success: true, message: "Success", newItem }); // Trả về phản hồi JSON
+  }
 });
 
 server.put("/api/your_cart/update/:id", (req, res) => {

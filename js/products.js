@@ -1,7 +1,4 @@
 const main = async function () {
-  let products = [];
-  let cartItems = [];
-  const Service = new ProductService();
 
   const synchCartItems = () => {
     synchSubtotalPrice();
