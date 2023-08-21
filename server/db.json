@@ -110,21 +110,7 @@
     }
   ],
   "your_cart": [
-    {
-      "id": "3d082adfdb811ed1b20186af",
-      "quantity": 1,
-      "createdAt": 1692346413805,
-      "updatedAt": 1692346413805
-    },
-    {
-      "id": "65de94af186accefe9a3ee48",
-      "quantity": 1,
-      "createdAt": 1692346419287,
-      "updatedAt": 1692346419287
-    }
   ],
   "cart_subtotal": {
-    "value": 762,
-    "updatedAt": 1692346420415
   }
 }

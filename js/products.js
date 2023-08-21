@@ -1,74 +1,37 @@
 const main = async function () {
   let products = [];
   let cartItems = [];
-  const ls = localStorage;
+  const Service = new ProductService();
+
   const synchCartItems = () => {
-    ls.setItem("cart", JSON.stringify(cartItems));
     synchSubtotalPrice();
   };
 
   const synchSubtotalPrice = () => {
-    let price = cartItems.reduce((total, current) => {
-      return total + current.item.price * current.amount;
-    }, 0);
-    document.querySelector(
-      ".cart-section .cart-subtotal .subtotal-price"
-    ).innerHTML = `$ ${price}`;
+    let price = calPrice(cartItems);
+    $(".cart-section .cart-subtotal .subtotal-price").innerHTML = `$ ${price}`;
   };
-  // crud function
+
   const fetchProducts = async () => {
-    document
-      .querySelector(".products-section .loading-spinner-products")
-      .classList.add("show");
-    const response = await fetch("http://localhost:3000/api/products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+    $(".products-section .loading-spinner-products").classList.add("show");
+    const data = await Service.getAll();
     products = data;
-    document
-      .querySelector(".products-section .loading-spinner-products")
-      .classList.remove("show");
+    $(".products-section .loading-spinner-products").classList.remove("show");
   };
 
   const fetchCartItems = async () => {
-    document.querySelector("#cart-layout .cart-loader").classList.add("show");
-    const respone = await fetch("http://localhost:3000/api/your_cart");
-    const data = await respone.json();
-    const promisesItem = data.map(
-      (cartItem) =>
-        new Promise((resolve, reject) => {
-          fetch(`http://localhost:3000/api/products/${cartItem.id}`)
-            .then((res) => res.json())
-            .then((data) => resolve({ item: data, amount: cartItem.quantity }));
-        })
-    );
-
+    $("#cart-layout .cart-loader").classList.add("show");
+    const promisesItem = await Service.getCartItem();
     await Promise.all(promisesItem).then((datas) => {
       cartItems = datas;
       synchCartItems();
-      document
-        .querySelector("#cart-layout .cart-loader")
-        .classList.remove("show");
+      $("#cart-layout .cart-loader").classList.remove("show");
     });
   };
 
   const addToCart = async (e, item) => {
     e.target.querySelector(".loader-spinner").classList.add("show");
-
-    const respone = await fetch("http://localhost:3000/api/your_cart/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: item.id,
-      }),
-    });
-
-    const data = await respone;
+    const data = await Service.addToCart(item);
     if (!data) {
       return;
     }
@@ -79,34 +42,25 @@ const main = async function () {
   };
 
   const updateAmount = async (item) => {
+    const currentCartItem = $(`.cart-products-item.product_${item.item.id}`);
+    const amount_box = currentCartItem.querySelector(".amount-box");
+    currentCartItem
+      .querySelector(".amount-box .increase-btn")
+      .setAttribute("disabled", true);
+    currentCartItem
+      .querySelector(".amount-box .decrease-btn")
+      .setAttribute("disabled", true);
     if (!cartItems) {
       return;
     }
-
     if (item.amount <= 0) {
       removeProduct(item.item.id);
       return;
     }
-
-    document
-      .querySelector(
-        `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
-      )
-      .classList.add("show");
-    const respone = await fetch(
-      `http://localhost:3000/api/your_cart/update/${item.item.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          quantity: item.amount,
-        }),
-      }
-    );
-
-    const data = await respone.json();
+    $(
+      `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+    ).classList.add("show");
+    const data = await Service.updateItem(item);
     if (data.success) {
       cartItems = cartItems.map((currentItem) => {
         if (currentItem.item.id === item.item.id) {
@@ -121,19 +75,12 @@ const main = async function () {
       });
 
       synchCartItems();
-      document
-        .querySelector(
-          `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
-        )
-        .classList.remove("show");
+      $(
+        `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+      ).classList.remove("show");
     }
 
-    //
-    const currentCartItem = document.querySelector(
-      `.cart-products-item.product_${item.item.id}`
-    );
-
-    currentCartItem.querySelector(".amount-box").innerHTML = `
+    amount_box.innerHTML = `
                                   <button class="decrease-btn">
                                       <span class="material-icons">
                                           arrow_back_ios
@@ -164,31 +111,23 @@ const main = async function () {
       .querySelector(".amount-box input")
       .addEventListener("blur", function () {
         const amount = currentCartItem.querySelector(".amount-box input").value;
+        if (parseInt(amount) === parseInt(item.amount)) {
+          return;
+        }
         updateAmount({ ...item, amount: parseInt(amount) });
       });
   };
+
   const removeProduct = async (id) => {
     if (!cartItems) {
       return;
     }
 
-    const currentCartItem = document.querySelector(
-      `.cart-products-item.product_${id}`
-    );
+    const currentCartItem = $(`.cart-products-item.product_${id}`);
     currentCartItem
       .querySelector(`.img-wrapper .loader-spinner-wrapper`)
       .classList.add("show");
-    const respone = await fetch(
-      `http://localhost:3000/api/your_cart/remove/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const data = await respone.json();
+    const data = await Service.removeItem(id);
     if (data.success) {
       cartItems = cartItems.filter((item) => item.item.id !== id);
       currentCartItem
@@ -200,21 +139,19 @@ const main = async function () {
   };
   // listener DOM event function
   const listenerHideCartLayout = () => {
-    const cartLayout = document.querySelector("#cart-layout");
+    const cartLayout = $("#cart-layout");
     cartLayout.addEventListener("click", function () {
-      document.querySelector("#cart-checkbox").checked = true;
+      $("#cart-checkbox").checked = true;
     });
-    document
-      .querySelector(".cart-section")
-      .addEventListener("click", function (e) {
-        e.stopPropagation();
-      });
+    $(".cart-section").addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
   };
   const fillToCart = () => {
     if (!cartItems) {
       return;
     }
-    const cartProducts = document.querySelector("#cart-layout .cart-products");
+    const cartProducts = $("#cart-layout .cart-products");
     cartProducts.innerHTML = ``;
     cartItems.forEach((currentItem) => {
       const newItem = document.createElement("div");
@@ -339,9 +276,7 @@ const main = async function () {
   const fillSlider = () => {
     let currentSlide = 0;
     settingSlider(currentSlide);
-    const nextBtn = document.querySelector(
-      "#cart-layout .slider-control .btn.next-btn"
-    );
+    const nextBtn = $("#cart-layout .slider-control .btn.next-btn");
     nextBtn.addEventListener("click", function () {
       if (
         currentSlide ===
@@ -353,9 +288,7 @@ const main = async function () {
       }
       settingSlider(currentSlide);
     });
-    const backBtn = document.querySelector(
-      "#cart-layout .slider-control .btn.back-btn"
-    );
+    const backBtn = $("#cart-layout .slider-control .btn.back-btn");
     backBtn.addEventListener("click", function () {
       if (currentSlide === 0) {
         currentSlide =
