@@ -11,23 +11,9 @@ const main = async function () {
     let price = cartItems.reduce((total, current) => {
       return total + current.item.price * current.amount;
     }, 0);
-    fetch("http://localhost:3000/api/cart_subtotal", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        value: price,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          document.querySelector(
-            ".cart-section .cart-subtotal .subtotal-price"
-          ).innerHTML = `$ ${price}`;
-        }
-      });
+    document.querySelector(
+      ".cart-section .cart-subtotal .subtotal-price"
+    ).innerHTML = `$ ${price}`;
   };
   // crud function
   const fetchProducts = async () => {
