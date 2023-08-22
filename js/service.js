@@ -48,7 +48,7 @@ class ProductService {
         id: item.id,
       }),
     });
-    const data = await respone;
+    const data = await respone.json();
     return data || null;
   }
 
