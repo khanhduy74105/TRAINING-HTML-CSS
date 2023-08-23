@@ -1,13 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const filePath = path.join(__dirname, "..", "db.json");
-module.exports = () => {
+module.exports = (updateData) => {
   return new Promise((resolver, reject) => {
-    fs.readFile(filePath, "utf8", (err, data) => {
+    fs.writeFile(filePath, updateData, "utf8", (err) => {
       if (err) {
         reject(err);
       }
-      resolver(JSON.parse(data));
+      resolver(true);
     });
   });
 };

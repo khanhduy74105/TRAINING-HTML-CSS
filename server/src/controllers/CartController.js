@@ -1,27 +1,26 @@
 const CartService = require("../services/CartService");
 
 class CartController {
-  getCart(req, res) {
-    return res.json(CartService.getCart());
+  async getCart(req, res) {
+    return res.json(await CartService.getCart());
   }
 
-  addToCart(req, res) {
+  async addToCart(req, res) {
     const { id } = req.body;
-
-    return res.json(CartService.addCartItem(id));
+    return res.json(await CartService.addCartItem(id));
   }
 
-  updateCartItem(req, res) {
+  async updateCartItem(req, res) {
     const { id } = req.params;
     const { quantity } = req.body;
     return res.json(
-      CartService.updateCartItem({ id, quantity: parseInt(quantity) })
+      await CartService.updateCartItem({ id, quantity: parseInt(quantity) })
     );
   }
 
-  deleteCartItem(req, res) {
+  async deleteCartItem(req, res) {
     const { id } = req.params;
-    return res.json(CartService.deleteCartItem(id));
+    return res.json(await CartService.deleteCartItem(id));
   }
 }
 

@@ -1,15 +1,13 @@
 const ProductService = require("../services/ProductService");
 
 class ProductController {
-  getAllProducts(req, res) {
-    return res.json(ProductService.getAll());
+  async getAllProducts(req, res) {
+    const data = await ProductService.getAll();
+    return res.json(data);
   }
-
-  getProductById(req, res) {
+  async getProductById(req, res) {
     const { id } = req.params;
-    console.log(id)
-    return res.json(ProductService.getProductById(id));
+    return res.json(await ProductService.getProductById(id));
   }
 }
-
 module.exports = new ProductController();

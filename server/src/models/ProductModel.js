@@ -1,18 +1,17 @@
 const readDb = require("../utils/readDb");
 class Product {
-  getAll() {
+  async getAll() {
     const products = [];
-    const jsonData = readDb();
+    const jsonData = await readDb();
     const productsData = jsonData.products;
     products.push(...productsData);
     return products;
   }
 
-  getById(id) {
-    const jsonData = readDb();
+  async getById(id) {
+    const jsonData = await readDb();
     const productsData = jsonData.products;
     return productsData.find((item) => item.id === id) || {};
   }
 }
-
-module.exports = new Product();
+module.exports = Product;

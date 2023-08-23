@@ -24,7 +24,7 @@ class ProductService {
         });
       }
     });
-    return await Promise.all(promisesItem.filter((item) => item != null));
+    return await Promise.all(promisesItem.filter((item) => item !== null));
   }
 
   async getProductById(id) {

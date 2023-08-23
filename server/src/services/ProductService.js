@@ -1,10 +1,12 @@
 const ProductModel = require("../models/ProductModel");
 class ProductService {
-  getAll() {
-    return ProductModel.getAll();
+  async getAll() {
+    const Product = new ProductModel();
+    return await Product.getAll();
   }
-  getProductById(id) {
-    return ProductModel.getById(id);
+  async getProductById(id) {
+    const Product = new ProductModel();
+    return await Product.getById(id);
   }
 }
 

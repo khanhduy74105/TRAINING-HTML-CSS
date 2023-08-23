@@ -1,16 +1,32 @@
 const CartModel = require("../models/CartModel");
 class CartService {
-  getCart() {
-    return CartModel.getCart();
+  async getCart() {
+    const cart = new CartModel();
+    return await cart.getCart();
   }
-  addCartItem(id) {
-    return CartModel.addCartItem(id);
+  async addCartItem(id) {
+    const newCartItem = new CartModel({ id: id });
+    const saved = await newCartItem.save();
+    return saved;
   }
-  updateCartItem(item) {
-    return CartModel.updateCartItem(item);
+  async updateCartItem(item) {
+    const cartItem = new CartModel();
+    const isFOund = await cartItem.findById(item.id);
+    if (isFOund) {
+      const updated = await cartItem.update(item);
+      return updated;
+    }
+
+    return "Item not exist";
   }
-  deleteCartItem(id) {
-    return CartModel.deleteCartItem(id);
+  async deleteCartItem(id) {
+    const cartItem = new CartModel();
+    const isFound = await cartItem.findById(id);
+    if (isFound) {
+      const deleted = await cartItem.delete(id);
+      return deleted;
+    }
+    return "Item not exist";
   }
 }
 
