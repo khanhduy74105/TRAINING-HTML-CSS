@@ -18,13 +18,13 @@ class ProductService {
         return null;
       } else {
         return new Promise((resolve, reject) => {
-          fetch(`http://localhost:3000/api/products/${cartItem.id}`)
+          fetch(`${API_ADDRESS}/products/${cartItem.id}`)
             .then((res) => res.json())
             .then((data) => resolve({ item: data, amount: cartItem.quantity }));
         });
       }
     });
-    return promisesItem.filter((item) => item != null);
+    return await Promise.all(promisesItem.filter((item) => item != null));
   }
 
   async getProductById(id) {

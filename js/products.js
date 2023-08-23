@@ -1,5 +1,4 @@
 const main = async function () {
-
   const synchCartItems = () => {
     synchSubtotalPrice();
   };
@@ -19,11 +18,9 @@ const main = async function () {
   const fetchCartItems = async () => {
     $("#cart-layout .cart-loader").classList.add("show");
     const promisesItem = await Service.getCartItem(cartItems);
-    await Promise.all(promisesItem).then((datas) => {
-      cartItems = [...cartItems, ...datas];
-      synchCartItems();
-      $("#cart-layout .cart-loader").classList.remove("show");
-    });
+    cartItems = [...cartItems, ...promisesItem];
+    synchCartItems();
+    $("#cart-layout .cart-loader").classList.remove("show");
   };
 
   const addToCart = async (e, item) => {
@@ -312,6 +309,5 @@ const main = async function () {
   fillSlider();
   listenerHideCartLayout();
 };
-
 
 main();

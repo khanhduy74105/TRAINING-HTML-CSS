@@ -36,7 +36,6 @@ class Cart {
       product.id === item.id ? item : product
     );
     const updateData = JSON.stringify(jsonData);
-    console.log(updateData);
     fs.writeFileSync(filePath, updateData, "utf8");
     return { success: true, message: "Updated successfully" };
   }
@@ -46,7 +45,6 @@ class Cart {
       .map((product) => (product.id === id ? null : product))
       .filter((item) => item !== null);
     const updateData = JSON.stringify(jsonData);
-    console.log(updateData);
     fs.writeFileSync(filePath, updateData, "utf8");
     return { success: true, message: "Deleted successfully" };
   }
