@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" placeholder="name" />
+                <input type="password" placeholder="password" />
+                <input type="text" placeholder="email address" />
+                <button id="register-btn">create</button>
+                <p class="message">Already registered? <a href="#" id="switch-to-login">Sign In</a></p>
+            </form>
+            <form class="login-form">
+                <input type="text" placeholder="username" />
+                <input type="password" placeholder="password" />
+                <button id="login-btn">login</button>
+                <p class="message">Not registered? <a href="#" id="switch-to-register">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="./js/utils.js"></script>
+    <script src="./js/constants.js"></script>
+    <script src="./js/service.js"></script>
+    <script src="./js/global.js"></script>
+    <script src="./js/auth.js"></script>
+</body>
+
+</html>

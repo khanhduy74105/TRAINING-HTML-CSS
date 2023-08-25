@@ -5,3 +5,11 @@ const calPrice = (items) => {
 };
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
+
+const setUserDataToLocal = (data) => {
+  localStorage.setItem("user", JSON.stringify(data));
+};
+
+const directToLogin = () => {
+  window.location.href = "./auth.html";
+};

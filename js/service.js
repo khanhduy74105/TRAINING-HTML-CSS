@@ -7,20 +7,26 @@ class ProductService {
       },
     });
     const data = await response.json();
-    return data;
+    return data.data;
   }
 
   async getCartItem(currentCartItems) {
-    const respone = await fetch(`${API_ADDRESS}/your_cart`);
+    const respone = await fetch(`${API_ADDRESS}/user/cart/my`, {
+      credentials: "include",
+    });
     const data = await respone.json();
-    const promisesItem = data.map((cartItem) => {
-      if (currentCartItems.find((item) => item.item.id === cartItem.id)) {
+    const promisesItem = data.data.map((cartItem) => {
+      if (
+        currentCartItems.find((item) => item.item._id === cartItem.product_id)
+      ) {
         return null;
       } else {
         return new Promise((resolve, reject) => {
-          fetch(`${API_ADDRESS}/products/${cartItem.id}`)
+          fetch(`${API_ADDRESS}/products/${cartItem.product_id}`)
             .then((res) => res.json())
-            .then((data) => resolve({ item: data, amount: cartItem.quantity }));
+            .then((data) => {
+              resolve({ item: data.data, amount: cartItem.quantity });
+            });
         });
       }
     });
@@ -33,28 +39,31 @@ class ProductService {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     const data = await response.json();
     return data;
   }
 
   async addToCart(item) {
-    const respone = await fetch("http://localhost:3000/api/your_cart/add", {
+    const respone = await fetch(`${API_ADDRESS}/user/cart/my/${item._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        id: item.id,
-      }),
+      credentials: "include",
     });
+    if (respone.status === 401) {
+      directToLogin();
+    }
     const data = await respone.json();
+
     return data || null;
   }
 
   async updateItem(item) {
     const respone = await fetch(
-      `http://localhost:3000/api/your_cart/update/${item.item.id}`,
+      `${API_ADDRESS}/user/cart/my/${item.item._id}`,
       {
         method: "PUT",
         headers: {
@@ -63,6 +72,7 @@ class ProductService {
         body: JSON.stringify({
           quantity: item.amount,
         }),
+        credentials: "include",
       }
     );
 
@@ -71,17 +81,56 @@ class ProductService {
   }
 
   async removeItem(id) {
-    const respone = await fetch(
-      `http://localhost:3000/api/your_cart/remove/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const respone = await fetch(`${API_ADDRESS}/user/cart/my/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
     const data = await respone.json();
+    return data || null;
+  }
+
+  async login(username, password) {
+    const response = await fetch(`${API_ADDRESS}/user/login`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data || null;
+  }
+
+  async register({ username, password }) {
+    const response = await fetch(`${API_ADDRESS}/user/register`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+
+    const data = await response.json();
+    return data || null;
+  }
+
+  async logout() {
+    const response = await fetch(`${API_ADDRESS}/user/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    const data = await response.json();
     return data || null;
   }
 }

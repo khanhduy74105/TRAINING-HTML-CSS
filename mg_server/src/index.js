@@ -11,7 +11,12 @@ mongoose
   .connect("mongodb+srv://khanhduy:khanhduy@cluster0.uljj515.mongodb.net/db")
   .then(() => {
     console.log("Connected db");
-    app.use(cors());
+    app.use(
+      cors({
+        origin: true, // Cho phép tất cả các nguồn truy cập (bạn có thể điều chỉnh cho cụ thể hơn)
+        credentials: true, // Cho phép truyền cookie
+      })
+    );
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

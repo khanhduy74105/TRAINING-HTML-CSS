@@ -1,7 +1,6 @@
 const constants = require("../../constants");
 const Service = require("./user.service");
 const bcrypt = require("bcrypt");
-const { generateAccessToken } = require("./utils");
 
 class controller {
   async register(req, res) {
@@ -58,16 +57,27 @@ class controller {
     if (response.success) {
       res.cookie("access_token", response.access_token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         domain: "localhost",
         path: "/",
-        // sameSite: "strict",
+        sameSite: "None",
       });
     }
 
     return res.json({
       ...response,
     });
+  }
+  async logout(req, res) {
+    // Để xóa cookie với tên là "access_token"
+    res.clearCookie("access_token", {
+      domain: "localhost",
+      path: "/",
+      secure: true,
+      sameSite: "None",
+    });
+
+    return res.json({ success: true, msg: "logout!" });
   }
 }
 

@@ -50,7 +50,7 @@ const main = async function () {
   };
 
   const updateAmount = async (item) => {
-    const currentCartItem = $(`.cart-products-item.product_${item.item.id}`);
+    const currentCartItem = $(`.cart-products-item.product_${item.item._id}`);
     const amount_box = currentCartItem.querySelector(".amount-box");
     currentCartItem
       .querySelector(".amount-box .increase-btn")
@@ -71,12 +71,12 @@ const main = async function () {
       return;
     }
     $(
-      `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+      `#cart-layout .cart-section .cart-products .product_${item.item._id} .img-wrapper .loader-spinner-wrapper`
     ).classList.add("show");
     const data = await Service.updateItem(item);
     if (data.success) {
       cartItems = cartItems.map((currentItem) => {
-        if (currentItem.item.id === item.item.id) {
+        if (currentItem.item.id === item.item._id) {
           return {
             ...currentItem,
             item: { ...currentItem.item },
@@ -89,7 +89,7 @@ const main = async function () {
 
       synchCartItems();
       $(
-        `#cart-layout .cart-section .cart-products .product_${item.item.id} .img-wrapper .loader-spinner-wrapper`
+        `#cart-layout .cart-section .cart-products .product_${item.item._id} .img-wrapper .loader-spinner-wrapper`
       ).classList.remove("show");
     }
 
@@ -118,7 +118,7 @@ const main = async function () {
     currentCartItem
       .querySelector(".col-1.col-item span")
       .addEventListener("click", function () {
-        removeProduct(item.item.id);
+        removeProduct(item.item._id);
       });
     currentCartItem
       .querySelector(".amount-box input")
@@ -169,7 +169,7 @@ const main = async function () {
     cartItems.forEach((currentItem) => {
       const newItem = document.createElement("div");
       newItem.classList.add(`cart-products-item`);
-      newItem.classList.add(`product_${currentItem.item.id}`);
+      newItem.classList.add(`product_${currentItem.item._id}`);
       newItem.classList.add("row");
       newItem.innerHTML = `
                         <div class="img-wrapper col-4 col-item">
@@ -214,7 +214,7 @@ const main = async function () {
       newItem
         .querySelector(".col-1.col-item span")
         .addEventListener("click", function () {
-          removeProduct(currentItem.item.id);
+          removeProduct(currentItem.item._id);
         });
       newItem
         .querySelector(".amount-box input")
@@ -320,6 +320,32 @@ const main = async function () {
       });
     }
   };
+
+  const setUserAuth = () => {
+    const logoutBlock = $(".products-header-wrapper .auth_block");
+    const loginBtn = $(".products-header-wrapper #login-btn");
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      logoutBlock.style.display = "block";
+      loginBtn.style.display = "none";
+
+      logoutBlock.querySelector("span:first-child").innerHTML = user.username;
+      logoutBlock
+        .querySelector("span#logout-btn")
+        .addEventListener("click", async () => {
+          localStorage.removeItem("user");
+          const x = await Service.logout();
+          console.log(x);
+          setUserAuth();
+        });
+    } else {
+      logoutBlock.style.display = "none";
+
+      loginBtn.style.display = "block";
+    }
+  };
+  setUserAuth();
 
   await fetchProducts();
   fillProducts();
