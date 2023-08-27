@@ -13,6 +13,13 @@
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+.form form {
+  display: none;
+}
+.form .register-form.show,
+.login-form.show {
+  display: block;
+}
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;

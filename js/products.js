@@ -30,12 +30,12 @@ const main = async function () {
     if (!data) {
       return;
     }
-    if (data === "Updated") {
+    if (data.success) {
       cartItems = cartItems.map((current) => {
-        if (current.item.id === item.id) {
+        if (current.item._id === item._id) {
           return {
             ...current,
-            amount: current.amount + 1,
+            amount: data.data.quantity,
           };
         } else {
           return current;
@@ -67,7 +67,7 @@ const main = async function () {
       return;
     }
     if (item.amount <= 0) {
-      removeProduct(item.item.id);
+      removeProduct(item.item._id);
       return;
     }
     $(
@@ -76,14 +76,13 @@ const main = async function () {
     const data = await Service.updateItem(item);
     if (data.success) {
       cartItems = cartItems.map((currentItem) => {
-        if (currentItem.item.id === item.item._id) {
+        if (currentItem.item._id === item.item._id) {
           return {
             ...currentItem,
             item: { ...currentItem.item },
             amount: item.amount,
           };
         }
-
         return currentItem;
       });
 
@@ -141,7 +140,7 @@ const main = async function () {
       .classList.add("show");
     const data = await Service.removeItem(id);
     if (data.success) {
-      cartItems = cartItems.filter((item) => item.item.id !== id);
+      cartItems = cartItems.filter((item) => item.item._id !== id);
       currentCartItem
         .querySelector(`.img-wrapper .loader-spinner-wrapper`)
         .classList.remove("show");
@@ -247,7 +246,7 @@ const main = async function () {
       const product = document.createElement("div");
       product.classList.add("col-item");
       product.classList.add("col-4");
-      product.classList.add(`product_item_${item.id}`);
+      product.classList.add(`product_item_${item._id}`);
       product.innerHTML = `
             <div class="product_item">
               <div class="product_wrapper">

@@ -25,10 +25,10 @@ class controller {
     if (response.success) {
       res.cookie("access_token", response.access_token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         domain: "localhost",
         path: "/",
-        // sameSite: "strict",
+        sameSite: "None",
       });
       return res.status(constants.HTTP_OK).json({
         ...response,

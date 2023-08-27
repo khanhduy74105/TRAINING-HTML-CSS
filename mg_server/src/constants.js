@@ -1,4 +1,4 @@
-const status = {
+const constants = {
   HTTP_OK: 200,
   HTTP_CREATED: 201,
 
@@ -13,4 +13,4 @@ const status = {
   SALT_LENGTH: 10,
 };
 
-module.exports = status;
+module.exports = constants;

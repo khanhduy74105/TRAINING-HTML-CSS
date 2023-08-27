@@ -110,7 +110,7 @@ class ProductService {
     return data || null;
   }
 
-  async register({ username, password }) {
+  async register(username, password) {
     const response = await fetch(`${API_ADDRESS}/user/register`, {
       method: "POST",
       credentials: "include",
@@ -118,6 +118,9 @@ class ProductService {
         username: username,
         password: password,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     const data = await response.json();
