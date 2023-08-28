@@ -121,9 +121,10 @@ const main = async function () {
       });
     currentCartItem
       .querySelector(".amount-box input")
-      .addEventListener("blur", function () {
+      .addEventListener("blur", function (e) {
+        e.preventDefault();
         const amount = currentCartItem.querySelector(".amount-box input").value;
-        if (parseInt(amount) === parseInt(item.amount)) {
+        if (parseInt(amount) === parseInt(amount)) {
           return;
         }
         updateAmount({ ...item, amount: parseInt(amount) });
@@ -219,6 +220,9 @@ const main = async function () {
         .querySelector(".amount-box input")
         .addEventListener("blur", function () {
           const amount = newItem.querySelector(".amount-box input").value;
+          if (parseInt(amount) === parseInt(currentItem.amount)) {
+            return;
+          }
           updateAmount({ ...currentItem, amount: parseInt(amount) });
         });
       cartProducts.appendChild(newItem);
@@ -334,8 +338,7 @@ const main = async function () {
         .querySelector("span#logout-btn")
         .addEventListener("click", async () => {
           localStorage.removeItem("user");
-          const x = await Service.logout();
-          console.log(x);
+          await Service.logout();
           setUserAuth();
         });
     } else {

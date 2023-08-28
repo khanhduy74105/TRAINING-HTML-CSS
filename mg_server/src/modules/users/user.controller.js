@@ -62,9 +62,12 @@ class controller {
         path: "/",
         sameSite: "None",
       });
+      return res.status(constants.HTTP_OK).json({
+        ...response,
+      });
     }
 
-    return res.json({
+    return res.status(constants.HTTP_BAD_REQUEST).json({
       ...response,
     });
   }
