@@ -1,5 +1,5 @@
 const CartProductsModel = require("./cart-products.model");
-class service {
+class cartProductService {
   async findOneById(id) {
     const cartItems = await CartProductsModel.findOne({ _id: id });
     return { data: cartItems, success: true, msg: "Success!!" };
@@ -52,4 +52,4 @@ class service {
   }
 }
 
-module.exports = service;
+module.exports = cartProductService;

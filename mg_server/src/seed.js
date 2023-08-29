@@ -15,8 +15,6 @@ const randomProducts = async (n) => {
     };
     products.push(product);
   }
-
-  console.log(products);
   await Product.insertMany(products);
   console.log("Products inserted successfully");
 };

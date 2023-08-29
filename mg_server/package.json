@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon ./src/index.js",
-    "render-data": "node render-data.js"
+    "render-data": "node ./src/index.js"
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
