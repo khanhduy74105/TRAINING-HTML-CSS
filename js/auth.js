@@ -11,16 +11,14 @@ function main() {
     const passwordInput = $('.login-form input[type="password"]');
     const username = usernameInput.value;
     const password = passwordInput.value;
-    console.log(username, password);
-
     if (username !== "" && password !== "") {
-      console.log("first");
       const data = await Service.login(username, password);
-      console.log(data);
       if (data.success) {
-        console.log(data);
-        setUserDataToLocal(data.user);
-        window.location.href = "./products.html";
+        const respone = await Service.getUserInfo();
+        if (respone.success) {
+          setUserDataToLocal(respone.data);
+          window.location.href = "./products.html";
+        }
       } else {
         alert(data.msg);
       }
@@ -36,8 +34,6 @@ function main() {
     const username = usernameInput.value;
     const password = passwordInput.value;
     const confirm_password = confirmInput.value;
-    console.log(username, password, confirm_password);
-
     if (username !== "" && password !== "" && confirm_password !== "") {
       if (confirm_password !== password) {
         alert("Confirm password is wrong");
@@ -45,9 +41,12 @@ function main() {
       }
       const data = await Service.register(username, password);
       if (data.success) {
-        console.log(data);
-        setUserDataToLocal(data.user);
-        window.location.href = "./products.html";
+        const respone = await Service.getUserInfo();
+        if (respone.success) {
+          console.log(respone);
+          setUserDataToLocal(respone.data);
+          window.location.href = "./products.html";
+        }
       } else {
         alert(data.msg);
       }

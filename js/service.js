@@ -25,7 +25,11 @@ class ProductService {
           fetch(`${API_ADDRESS}/products/${cartItem.product_id}`)
             .then((res) => res.json())
             .then((data) => {
-              resolve({ item: data.data, amount: cartItem.quantity });
+              resolve({
+                item: data.data,
+                amount: cartItem.quantity,
+                _id: cartItem._id,
+              });
             });
         });
       }
@@ -46,11 +50,14 @@ class ProductService {
   }
 
   async addToCart(item) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart/my/${item._id}`, {
+    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        product_id: item._id,
+      }),
       credentials: "include",
     });
     if (respone.status === 401) {
@@ -62,30 +69,29 @@ class ProductService {
   }
 
   async updateItem(item) {
-    const respone = await fetch(
-      `${API_ADDRESS}/user/cart/my/${item.item._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          quantity: item.amount,
-        }),
-        credentials: "include",
-      }
-    );
+    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cart_product_id: item._id,
+        quantity: item.amount,
+      }),
+      credentials: "include",
+    });
 
     const data = await respone.json();
     return data || null;
   }
 
   async removeItem(id) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart/my/${id}`, {
+    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ cart_product_id: id }),
       credentials: "include",
     });
 
@@ -101,6 +107,19 @@ class ProductService {
         username: username,
         password: password,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data || null;
+  }
+
+  async getUserInfo() {
+    const response = await fetch(`${API_ADDRESS}/user/me`, {
+      method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

@@ -1,7 +1,7 @@
 const User = require("./user.model");
 const Cart = require("../cart/cart.model");
 const { comparePassword, generateAccessToken } = require("./utils");
-class Service {
+class UserService {
   async createUser(userData) {
     const currentUser = await User.findOne({ username: userData.username });
     if (currentUser) {
@@ -20,11 +20,6 @@ class Service {
 
       return {
         msg: "Created user",
-        user: {
-          username: createdUser.username,
-          cart: createdUser.cart,
-          role: createdUser.role,
-        },
         success: true,
         access_token: access_token,
       };
@@ -50,13 +45,28 @@ class Service {
       msg: "login success",
       success: true,
       access_token: access_token,
-      user: {
-        username: currentUser.username,
-        cart: currentUser.cart,
-        role: currentUser.role,
-      },
     };
+  }
+
+  async getUserInfo(userId) {
+    const userInfo = await User.findById(userId);
+    if (!userInfo) {
+      return {
+        msg: "Failed get user info",
+        success: false,
+      };
+    } else {
+      return {
+        msg: "Success get user info",
+        success: true,
+        data: {
+          userId: userInfo._id,
+          username: userInfo.username,
+          role: userInfo.role,
+        },
+      };
+    }
   }
 }
 
-module.exports = Service;
+module.exports = UserService;

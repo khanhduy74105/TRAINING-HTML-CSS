@@ -1,10 +1,10 @@
 const constants = require("../../constants");
-const Service = require("./user.service");
+const UserService = require("./user.service");
 const bcrypt = require("bcrypt");
 
-class controller {
+class UserController {
   async register(req, res) {
-    const service = new Service();
+    const userService = new UserService();
     const body = req.body;
     const { username, password } = body;
     if (!username || !password) {
@@ -17,7 +17,7 @@ class controller {
     const salt = await bcrypt.genSalt(constants.SALT_LENGTH);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const response = await service.createUser({
+    const response = await userService.createUser({
       username: username,
       password: hashedPassword,
     });
@@ -43,7 +43,7 @@ class controller {
   }
 
   async login(req, res) {
-    const service = new Service();
+    const userService = new UserService();
     const body = req.body;
     const { username, password } = body;
     if (!username || !password) {
@@ -53,7 +53,7 @@ class controller {
       });
     }
 
-    const response = await service.getUser({ username, password });
+    const response = await userService.getUser({ username, password });
     if (response.success) {
       res.cookie("access_token", response.access_token, {
         httpOnly: true,
@@ -72,16 +72,24 @@ class controller {
     });
   }
   async logout(req, res) {
-    // Để xóa cookie với tên là "access_token"
     res.clearCookie("access_token", {
+      httpOnly: true,
+      secure: true,
       domain: "localhost",
       path: "/",
-      secure: true,
       sameSite: "None",
     });
 
     return res.json({ success: true, msg: "logout!" });
   }
+
+  async getUserInfo(req, res) {
+    const { user_id } = req;
+    const userWService = new UserService();
+    const userInfo = await userWService.getUserInfo(user_id);
+
+    return res.json(userInfo);
+  }
 }
 
-module.exports = new controller();
+module.exports = new UserController();

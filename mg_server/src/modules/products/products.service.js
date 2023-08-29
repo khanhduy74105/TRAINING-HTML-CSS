@@ -1,9 +1,9 @@
 const { default: mongoose } = require("mongoose");
-const productsModel = require("./products.model");
+const ProductsModel = require("./products.model");
 
-class service {
+class ProductService {
   async getProducts({ page = 1, limit = 6 }) {
-    const products = await productsModel
+    const products = await ProductsModel
       .find()
       .limit(page * limit)
       .skip((page - 1) * limit);
@@ -15,9 +15,9 @@ class service {
     if (!isValidId) {
       return { msg: "Product Id is invalid", success: false };
     }
-    const product = await productsModel.findById(id);
+    const product = await ProductsModel.findById(id);
     return { msg: "Success get product by id", success: true, data: product };
   }
 }
 
-module.exports = service;
+module.exports = ProductService;

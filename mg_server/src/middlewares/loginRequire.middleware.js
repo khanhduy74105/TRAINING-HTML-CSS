@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const constants = require("../constants");
-const loginRequire = (req, res, next) => {
+const CartService = require("../modules/cart/cart.service");
+const loginRequire = async (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {
     return res
@@ -14,7 +15,10 @@ const loginRequire = (req, res, next) => {
         .status(constants.HTTP_UNAUTHORIZED)
         .json({ msg: "UNAUTHORIZED" });
     }
-    req.cart_id = decoded.cart_id;
+    // const cartService = new CartService();
+    // const cart = await cartService.getCartById(decoded.user_id);
+    req.user_id = decoded.user_id;
+    // req.cart_id = cart._id
     next();
   } catch (error) {
     return res

@@ -382,7 +382,7 @@
 #cart-layout .cart-section .img-wrapper .loader-spinner-wrapper.show {
   display: flex;
 }
-#cart-layout .cart-section .img-wrapper .loader-spinner{
+#cart-layout .cart-section .img-wrapper .loader-spinner {
   display: block;
   width: 80px;
   height: 80px;

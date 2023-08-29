@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 exports.generateAccessToken = (data) => {
   const access_token = jwt.sign(
     {
+      user_id: data._id,
       username: data.username,
       role: data.role || "user",
-      cart_id: data.cart,
     },
     process.env.JWT_PRIVITE_KEY
   );

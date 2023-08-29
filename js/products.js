@@ -50,7 +50,7 @@ const main = async function () {
   };
 
   const updateAmount = async (item) => {
-    const currentCartItem = $(`.cart-products-item.product_${item.item._id}`);
+    const currentCartItem = $(`.cart-products-item.product_${item._id}`);
     const amount_box = currentCartItem.querySelector(".amount-box");
     currentCartItem
       .querySelector(".amount-box .increase-btn")
@@ -67,16 +67,16 @@ const main = async function () {
       return;
     }
     if (item.amount <= 0) {
-      removeProduct(item.item._id);
+      removeProduct(item._id);
       return;
     }
     $(
-      `#cart-layout .cart-section .cart-products .product_${item.item._id} .img-wrapper .loader-spinner-wrapper`
+      `#cart-layout .cart-section .cart-products .product_${item._id} .img-wrapper .loader-spinner-wrapper`
     ).classList.add("show");
     const data = await Service.updateItem(item);
     if (data.success) {
       cartItems = cartItems.map((currentItem) => {
-        if (currentItem.item._id === item.item._id) {
+        if (currentItem._id === item._id) {
           return {
             ...currentItem,
             item: { ...currentItem.item },
@@ -88,7 +88,7 @@ const main = async function () {
 
       synchCartItems();
       $(
-        `#cart-layout .cart-section .cart-products .product_${item.item._id} .img-wrapper .loader-spinner-wrapper`
+        `#cart-layout .cart-section .cart-products .product_${item._id} .img-wrapper .loader-spinner-wrapper`
       ).classList.remove("show");
     }
 
@@ -117,14 +117,14 @@ const main = async function () {
     currentCartItem
       .querySelector(".col-1.col-item span")
       .addEventListener("click", function () {
-        removeProduct(item.item._id);
+        removeProduct(item._id);
       });
     currentCartItem
       .querySelector(".amount-box input")
       .addEventListener("blur", function (e) {
         e.preventDefault();
         const amount = currentCartItem.querySelector(".amount-box input").value;
-        if (parseInt(amount) === parseInt(amount)) {
+        if (parseInt(amount) === parseInt(item.amount)) {
           return;
         }
         updateAmount({ ...item, amount: parseInt(amount) });
@@ -141,7 +141,7 @@ const main = async function () {
       .classList.add("show");
     const data = await Service.removeItem(id);
     if (data.success) {
-      cartItems = cartItems.filter((item) => item.item._id !== id);
+      cartItems = cartItems.filter((item) => item._id !== id);
       currentCartItem
         .querySelector(`.img-wrapper .loader-spinner-wrapper`)
         .classList.remove("show");
@@ -151,11 +151,19 @@ const main = async function () {
   };
   // listener DOM event function
   const listenerHideCartLayout = () => {
+    const showCartCheckbox = $("#cart-checkbox");
+    showCartCheckbox.addEventListener("change", (e) => {
+      console.log(e.target.checked);
+      if (e.target.checked) {
+        $("body").style.overflow = "visible";
+      }
+    });
     const cartLayout = $("#cart-layout");
     cartLayout.addEventListener("click", function () {
       $("#cart-checkbox").checked = true;
       $("body").style.overflow = "visible";
     });
+
     $(".cart-section").addEventListener("click", function (e) {
       e.stopPropagation();
     });
@@ -169,7 +177,7 @@ const main = async function () {
     cartItems.forEach((currentItem) => {
       const newItem = document.createElement("div");
       newItem.classList.add(`cart-products-item`);
-      newItem.classList.add(`product_${currentItem.item._id}`);
+      newItem.classList.add(`product_${currentItem._id}`);
       newItem.classList.add("row");
       newItem.innerHTML = `
                         <div class="img-wrapper col-4 col-item">
@@ -214,7 +222,7 @@ const main = async function () {
       newItem
         .querySelector(".col-1.col-item span")
         .addEventListener("click", function () {
-          removeProduct(currentItem.item._id);
+          removeProduct(currentItem._id);
         });
       newItem
         .querySelector(".amount-box input")

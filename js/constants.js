@@ -1,1 +1,1 @@
-const API_ADDRESS = 'http://localhost:3000'
+const API_ADDRESS = 'http://localhost:3000/api'

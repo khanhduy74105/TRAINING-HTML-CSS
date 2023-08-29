@@ -1,5 +1,5 @@
 const CartService = require("./cart.service");
-class controller {
+class CartController {
   async createCart(req, res) {
     const body = req.body;
     const { user_id } = body;

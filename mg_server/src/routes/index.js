@@ -1,11 +1,16 @@
-const userRoute = require("./userRoute");
-const productRoute = require("./productRoute");
-const cart_productsRoute = require("./cart_productsRoute");
+const express = require("express");
+const apiRouter = express.Router();
+const userRoute = require("./user.route");
+const productRoute = require("./product.route");
+const cartProductsRoute = require("./cart-product.route");
 
 const Route = (app) => {
-  app.use("/user", userRoute);
-  app.use("/products", productRoute);
-  app.use("/user/cart/my", cart_productsRoute);
+  apiRouter.use("/user", userRoute);
+  apiRouter.use("/products", productRoute);
+  apiRouter.use("/user/cart", cartProductsRoute);
+
+
+  app.use("/api", apiRouter);
 };
 
 module.exports = Route;

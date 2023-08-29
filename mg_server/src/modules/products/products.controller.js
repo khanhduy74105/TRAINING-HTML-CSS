@@ -1,8 +1,8 @@
-const Service = require("./products.service");
+const ProductService = require("./products.service");
 const constants = require("../../constants");
-class controller {
+class ProductController {
   async getProducts(req, res) {
-    const productService = new Service();
+    const productService = new ProductService();
     const query = req.query;
     const { page, limit } = query;
     const response = await productService.getProducts({ page, limit });
@@ -13,7 +13,7 @@ class controller {
     return res.status(constants.HTTP_BAD_REQUEST).json({});
   }
   async getDetailProduct(req, res) {
-    const productService = new Service();
+    const productService = new ProductService();
     const params = req.params;
     const { product_id } = params;
     const response = await productService.getProductById(product_id);
@@ -25,4 +25,4 @@ class controller {
   }
 }
 
-module.exports = new controller();
+module.exports = new ProductController();

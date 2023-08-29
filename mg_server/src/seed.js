@@ -1,15 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const mongoose = require("mongoose");
 const Product = require("./modules/products/products.model");
-mongoose
-  .connect("mongodb+srv://khanhduy:khanhduy@cluster0.uljj515.mongodb.net/db")
-  .then(() => {
-    console.log("Connected to MongoDB");
-    main();
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
-  });
+const connectToDB = require("../src/db/db.connect");
 
 const randomProducts = async (n) => {
   const products = [];
@@ -31,6 +23,8 @@ const randomProducts = async (n) => {
 
 async function main() {
   try {
+    await connectToDB();
+
     await randomProducts(12);
     mongoose.disconnect();
     console.log("Disconnected from MongoDB");
@@ -38,3 +32,5 @@ async function main() {
     console.error("Error:", error);
   }
 }
+
+main()
