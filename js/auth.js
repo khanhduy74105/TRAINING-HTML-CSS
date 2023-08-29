@@ -1,3 +1,9 @@
+const checkIsAuth = () => {
+  if (!isLogined()) {
+    return;
+  }
+  window.location.href = "./products.html";
+};
 function main() {
   const login_btn = $("#login-btn");
   const register_btn = $("#register-btn");
@@ -64,6 +70,7 @@ function main() {
   };
 
   swtichForm();
+
   login_btn.addEventListener("click", (e) => {
     e.preventDefault();
     loginHandler();
@@ -74,4 +81,5 @@ function main() {
   });
 }
 
+checkIsAuth();
 main();

@@ -10,6 +10,11 @@ const setUserDataToLocal = (data) => {
   localStorage.setItem("user", JSON.stringify(data));
 };
 
+const isLogined = () => {
+  const localUserData = localStorage.getItem("user");
+  return localUserData;
+};
+
 const directToLogin = () => {
   window.location.href = "./auth.html";
 };
