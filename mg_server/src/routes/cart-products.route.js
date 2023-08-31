@@ -9,13 +9,13 @@ router.post("/", loginRequire, cartProductsController.addToCart);
 router.put(
   "/",
   loginRequire,
-  verifyCart,
+  verifyCart((req) => req.body.cart_product_id),
   cartProductsController.updateItemCart
 );
 router.delete(
-  "/",
+  "/:cart_product_id",
   loginRequire,
-  verifyCart,
+  verifyCart((req) => req.params.cart_product_id),
   cartProductsController.deleteItemCart
 );
 module.exports = router;

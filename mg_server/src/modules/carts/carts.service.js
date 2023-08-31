@@ -1,10 +1,10 @@
-const Cart = require("./cart.model");
+const Cart = require("./carts.model");
 class CartService {
-  async createCart(userId) {
+  static async createCart(userId) {
     const cart = await Cart.create({ user_id: userId });
     return cart || false;
   }
-  async getCartById(userId) {
+  static async getCartById(userId) {
     const cart = await Cart.findOne({ user_id: userId });
     return cart || false;
   }

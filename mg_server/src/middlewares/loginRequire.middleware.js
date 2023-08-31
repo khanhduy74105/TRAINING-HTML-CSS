@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const constants = require("../constants");
-const CartService = require("../modules/cart/cart.service");
+const CartService = require("../modules/carts/carts.service");
 const loginRequire = async (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {

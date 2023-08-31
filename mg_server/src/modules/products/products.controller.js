@@ -1,27 +1,53 @@
 const ProductService = require("./products.service");
 const constants = require("../../constants");
+const { failedResponse } = require("../../helpers/ErrorsHandlers");
+const { default: mongoose } = require("mongoose");
 class ProductController {
   async getProducts(req, res) {
-    const productService = new ProductService();
-    const query = req.query;
-    const { page, limit } = query;
-    const response = await productService.getProducts({ page, limit });
-    if (response.success) {
-      return res.status(constants.HTTP_OK).json({ ...response });
+    try {
+      const query = req.query;
+      const { page, limit } = query;
+      const products = await ProductService.getProducts({ page, limit });
+      return res.status(constants.HTTP_OK).json({
+        success: true,
+        msg: "Get products success",
+        products: products,
+      });
+    } catch (error) {
+      return res
+        .status(constants.HTTP_INTERNAL_SERVER_ERROR)
+        .json(failedResponse("Internal error when getProducts"));
     }
-
-    return res.status(constants.HTTP_BAD_REQUEST).json({});
   }
   async getDetailProduct(req, res) {
-    const productService = new ProductService();
-    const params = req.params;
-    const { product_id } = params;
-    const response = await productService.getProductById(product_id);
-    if (response.success) {
-      return res.status(constants.HTTP_OK).json({ ...response });
-    }
+    try {
+      const params = req.params;
+      const { product_id } = params;
+      const isValidId = mongoose.Types.ObjectId.isValid(product_id);
 
-    return res.status(constants.HTTP_BAD_REQUEST).json({ ...response });
+      if (!isValidId) {
+        return res
+          .status(constants.HTTP_INTERNAL_SERVER_ERROR)
+          .json(failedResponse("ID invalid in getProduct by id"));
+      }
+
+      const productData = await ProductService.getProductById(product_id);
+      if (productData) {
+        return res.status(constants.HTTP_OK).json({
+          success: true,
+          msg: "get product by id success",
+          data: productData,
+        });
+      }
+
+      return res
+        .status(constants.HTTP_BAD_REQUEST)
+        .json(failedResponse("Failed in getProduct by id"));
+    } catch (error) {
+      return res
+        .status(constants.HTTP_INTERNAL_SERVER_ERROR)
+        .json(failedResponse("Internal error when getProduct by id"));
+    }
   }
 }
 

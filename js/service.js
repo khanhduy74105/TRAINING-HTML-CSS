@@ -7,11 +7,11 @@ class ProductService {
       },
     });
     const data = await response.json();
-    return data.data;
+    return data.products;
   }
 
   async getCartItem(currentCartItems) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart/my`, {
+    const respone = await fetch(`${API_ADDRESS}/cart-products/my`, {
       credentials: "include",
     });
     const data = await respone.json();
@@ -50,7 +50,7 @@ class ProductService {
   }
 
   async addToCart(item) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
+    const respone = await fetch(`${API_ADDRESS}/cart-products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ class ProductService {
   }
 
   async updateItem(item) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
+    const respone = await fetch(`${API_ADDRESS}/cart-products`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ class ProductService {
   }
 
   async removeItem(id) {
-    const respone = await fetch(`${API_ADDRESS}/user/cart`, {
+    const respone = await fetch(`${API_ADDRESS}/cart-products/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ class ProductService {
   }
 
   async login(username, password) {
-    const response = await fetch(`${API_ADDRESS}/user/login`, {
+    const response = await fetch(`${API_ADDRESS}/users/login`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -117,7 +117,7 @@ class ProductService {
   }
 
   async getUserInfo() {
-    const response = await fetch(`${API_ADDRESS}/user/me`, {
+    const response = await fetch(`${API_ADDRESS}/users/me`, {
       method: "GET",
       credentials: "include",
       headers: {
@@ -130,7 +130,7 @@ class ProductService {
   }
 
   async register(username, password) {
-    const response = await fetch(`${API_ADDRESS}/user/register`, {
+    const response = await fetch(`${API_ADDRESS}/users/register`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -147,7 +147,7 @@ class ProductService {
   }
 
   async logout() {
-    const response = await fetch(`${API_ADDRESS}/user/logout`, {
+    const response = await fetch(`${API_ADDRESS}/users/logout`, {
       method: "POST",
       credentials: "include",
     });

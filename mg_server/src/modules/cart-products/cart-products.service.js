@@ -1,54 +1,52 @@
 const CartProductsModel = require("./cart-products.model");
 class cartProductService {
-  async findOneById(id) {
+  static async checkExistedCartProductItem({ product_id, cart_id }) {
+    const existedItem = await CartProductsModel.findOne({
+      cart_id: cart_id,
+      product_id: product_id,
+    });
+
+    return existedItem;
+  }
+
+  static async findOneById(id) {
     const cartItems = await CartProductsModel.findOne({ _id: id });
     return { data: cartItems, success: true, msg: "Success!!" };
   }
-  async getCartItems({ cart_id }) {
+  static async getCartItems({ cart_id }) {
     const cartItems = await CartProductsModel.find({ cart_id });
     return { success: true, msg: "success", data: cartItems };
   }
 
-  async addToCart({ product_id, cart_id }) {
-    const exitedItem = await CartProductsModel.findOne({
-      product_id,
-      cart_id,
-    });
-
-    if (exitedItem) {
-      exitedItem.quantity = exitedItem.quantity + 1;
-      await exitedItem.save();
-      return { success: true, msg: "success", data: exitedItem };
-    }
-
+  static async addToCart({ product_id, cart_id }) {
     const item = await CartProductsModel.create({
       product_id,
       cart_id,
       quantity: 1,
     });
 
-    return { success: true, msg: "success", data: item };
+    return item;
   }
 
-  async updateCartItem(updateData) {
+  static async updateCartItem(_id, item) {
     const updatedItem = await CartProductsModel.findOneAndUpdate(
-      { _id: updateData.cart_product_id },
+      { _id: _id },
       {
-        quantity: updateData.quantity,
+        quantity: item.quantity,
       },
       { new: true }
     );
-    return { success: true, msg: "success", data: updatedItem };
+    return updatedItem;
   }
 
-  async deleteCartItem(id) {
+  static async deleteCartItem(id) {
     const deleted = await CartProductsModel.findOneAndDelete(
       {
         _id: id,
       },
       { new: true }
     );
-    return { success: true, msg: "success", data: deleted };
+    return deleted && null;
   }
 }
 

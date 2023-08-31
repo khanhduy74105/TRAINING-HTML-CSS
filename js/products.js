@@ -254,6 +254,7 @@ const main = async function () {
   };
   const fillProducts = async () => {
     const row = document.getElementById("products-row");
+    console.log(products)
     products.forEach((item) => {
       const product = document.createElement("div");
       product.classList.add("col-item");
