@@ -8,7 +8,7 @@ class CartProductService extends BaseService<ICartProduct>{
 
     static cartProducts_service_instance = new CartProductService(CartProductsModel)
 
-    async checkExistedCartProductItem(cartProduct: CartProductsDTO) {
+    async checkExistedCartProductItem(cartProduct: Partial<ICartProduct>) {
         const existedItem: ICartProduct = await CartProductService.cartProducts_service_instance.findOne({
             cart_id: cartProduct.cart_id,
             product_id: cartProduct.product_id,
@@ -17,12 +17,12 @@ class CartProductService extends BaseService<ICartProduct>{
         return existedItem || null;
     }
 
-    async getCartItems({ cart_id }: CartProductsDTO) {
+    async getCartItems({ cart_id }: Partial<ICartProduct>) {
         const cartItems: ICartProduct[] = await CartProductService.cartProducts_service_instance.find({ cart_id });
         return cartItems
     }
 
-    async addToCart(cartProductItem: CartProductsDTO) {
+    async addToCart(cartProductItem: Partial<ICartProduct>) {
         const item = await CartProductService.cartProducts_service_instance.create({ ...cartProductItem, quantity: 1 });
         return item;
     }
