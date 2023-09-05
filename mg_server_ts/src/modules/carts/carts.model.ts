@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ICart } from "types";
 
 const Cart = new mongoose.Schema(
   {
@@ -13,4 +14,4 @@ const Cart = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("cart", Cart);
+export default mongoose.model<ICart>("cart", Cart);

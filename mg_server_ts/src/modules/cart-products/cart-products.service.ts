@@ -2,11 +2,14 @@ import { ICartProduct } from "types";
 import CartProductsModel from "./cart-products.model";
 import { CartProductsDTO } from "./dto/CartProductsDTO";
 import { Types } from "mongoose";
+import BaseService from "../../helpers/BaseService";
 
-class CartProductService {
+class CartProductService extends BaseService<ICartProduct>{
 
-    static async checkExistedCartProductItem(cartProduct: CartProductsDTO) {
-        const existedItem: ICartProduct = await CartProductsModel.findOne({
+    static cartProducts_service_instance = new CartProductService(CartProductsModel)
+
+    async checkExistedCartProductItem(cartProduct: CartProductsDTO) {
+        const existedItem: ICartProduct = await CartProductService.cartProducts_service_instance.findOne({
             cart_id: cartProduct.cart_id,
             product_id: cartProduct.product_id,
         });
@@ -14,23 +17,18 @@ class CartProductService {
         return existedItem || null;
     }
 
-    static async findOneById(id: Types.ObjectId) {
-        const cartItem: ICartProduct = await CartProductsModel.findOne({ _id: id });
-        return cartItem
-    }
-
-    static async getCartItems({ cart_id }: CartProductsDTO) {
-        const cartItems: ICartProduct[] = await CartProductsModel.find({ cart_id });
+    async getCartItems({ cart_id }: CartProductsDTO) {
+        const cartItems: ICartProduct[] = await CartProductService.cartProducts_service_instance.find({ cart_id });
         return cartItems
     }
 
-    static async addToCart(cartProductItem: CartProductsDTO) {
-        const item = await CartProductsModel.create({ ...cartProductItem, quantity: 1 });
+    async addToCart(cartProductItem: CartProductsDTO) {
+        const item = await CartProductService.cartProducts_service_instance.create({ ...cartProductItem, quantity: 1 });
         return item;
     }
 
-    static async updateCartItem(_id: Types.ObjectId, item: ICartProduct) {
-        const updatedItem: ICartProduct = await CartProductsModel.findOneAndUpdate(
+    async updateCartItem(_id: Types.ObjectId, item: Partial<ICartProduct>) {
+        const updatedItem: ICartProduct = await CartProductService.cartProducts_service_instance.findOneAndUpdate(
             { _id: _id },
             {
                 quantity: item.quantity,
@@ -40,14 +38,12 @@ class CartProductService {
         return updatedItem;
     }
 
-    static async deleteCartItem(id: Types.ObjectId) {
-        const deleted = await CartProductsModel.findOneAndDelete(
-            {
-                _id: id,
-            },
+    async deleteCartItem(id: Types.ObjectId) {
+        const deleted = await CartProductService.cartProducts_service_instance.findOneByIdAndDelete(
+            id,
             { new: true }
         );
         return deleted && null;
     }
 }
-export default CartProductService;
+export default CartProductService.cartProducts_service_instance;

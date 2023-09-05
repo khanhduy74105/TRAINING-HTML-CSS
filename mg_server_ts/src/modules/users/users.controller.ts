@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt'
-import { UserDTO } from './dto/UserDTO';
 import { Request, Response } from "express";
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import UserService from './users.service'
@@ -11,7 +10,7 @@ class UsersController {
     async register(req: Request, res: Response) {
         try {
 
-            const body: UserDTO = req.body;
+            const body: Partial<IUser> = req.body;
             const { username, password } = body;
 
             if (!username || !password) {
@@ -72,7 +71,7 @@ class UsersController {
     async login(req: Request, res: Response) {
         try {
             const body = req.body;
-            const { username, password }: UserDTO = body;
+            const { username, password }: Partial<IUser> = body;
             if (!username || !password) {
                 return res.status(StatusCodes.BAD_REQUEST).json({
                     success: false,
@@ -81,17 +80,16 @@ class UsersController {
             }
 
             const access_token = await UserService.loginUser({ username, password });
-
             if (access_token) {
                 res.cookie("access_token", access_token, {
                     httpOnly: true,
-                    secure: false,
+                    secure: true,
                     domain: "localhost",
                     path: "/",
                     sameSite: "none",
                 });
                 return res.status(StatusCodes.OK).json({
-                    success: true, 
+                    success: true,
                     msg: "Login success!",
                 });
             }

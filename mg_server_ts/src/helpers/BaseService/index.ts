@@ -1,6 +1,4 @@
 import { Model, Types } from "mongoose";
-import { IUser } from "types";
-
 class BaseService<T> {
     private model: Model<T>;
 
@@ -19,10 +17,10 @@ class BaseService<T> {
     find(parital: Partial<T>) {
         return this.model.find(parital)
     }
-    findOneAndUpdate(parital: Partial<T>, data: Partial<T>) {
-        return this.model.findOneAndUpdate(parital, data)
+    findOneAndUpdate(parital: Partial<T>, data: Partial<T>, options: any) {
+        return this.model.findOneAndUpdate(parital, data, options)
     }
-    findOneByIdAndDelete(_id: Types.ObjectId) {
+    findOneByIdAndDelete(_id: Types.ObjectId, options: any) {
         return this.model.findOneAndDelete({ _id })
     }
 }

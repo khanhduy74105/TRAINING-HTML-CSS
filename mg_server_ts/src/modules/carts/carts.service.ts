@@ -3,15 +3,13 @@ import Cart from './carts.model'
 import { ICart } from 'types';
 import BaseService from "../../helpers/BaseService";
 class CartService extends BaseService<ICart> {
-  static cart_instance = new BaseService(Cart)
-  static async createCart(userId: Types.ObjectId) {
-    const cart: ICart | any = await this.cart_instance.create({ user_id: userId });
-    return cart || false;
+  static cart_instance = new CartService(Cart)
+  createCart(userId: Types.ObjectId) {
+    return CartService.cart_instance.create({ user_id: userId });
   }
-  static async getCartById(userId: Types.ObjectId) {
-    const cart: ICart = await Cart.findOne({ user_id: userId });
-    return cart || false;
+  getCartById(userId: Types.ObjectId) {
+    return CartService.cart_instance.findOne({ user_id: userId });
   }
 }
 
-export default CartService;
+export default CartService.cart_instance;

@@ -1,24 +1,21 @@
 import { ICart, IUser } from "types";
 import User from "./users.model";
 import { comparePassword, generateAccessToken } from "./utils";
-import { UserDTO } from "./dto/UserDTO";
 import { Types } from "mongoose";
 import BaseService from "../../helpers/BaseService";
 import CartService from "../carts/carts.service";
 
-class UsersService {
+class UsersService extends BaseService<IUser> {
 
-    static user_instance = new BaseService<IUser>(User)
+    static user_instance = new UsersService(User)
 
-    static async createUser(userData: UserDTO) {
+    async createUser(userData: Partial<IUser>) {
 
-        const user = await this.user_instance.create(userData);
+        const user = await UsersService.user_instance.create(userData);
 
         if (user) {
             const cart: ICart | any = await CartService.createCart(user.id);
-            user.cart = cart._id;
-            await user.save();
-            const createdUser: IUser = await this.user_instance.findOne({
+            const createdUser: IUser = await UsersService.user_instance.findOne({
                 username: userData.username,
             });
             return createdUser;
@@ -27,10 +24,10 @@ class UsersService {
         return null;
     }
 
-    static async loginUser(userData: UserDTO): Promise<any> {
+    async loginUser(userData: Partial<IUser>): Promise<any> {
         const currentUser: IUser & {
             password: string
-        } = await this.user_instance.findOne({ username: userData.username }) as IUser & {
+        } = await UsersService.user_instance.findOne({ username: userData.username }) as IUser & {
             password: string
         };
         if (!currentUser) {
@@ -49,15 +46,15 @@ class UsersService {
         return access_token;
     }
 
-    static async checkUserExisted(username: String): Promise<IUser> {
+    async checkUserExisted(username: String): Promise<IUser> {
         const exitedUser: IUser = await User.findOne({ username: username });
         return exitedUser;
     }
 
-    static async getUserInfo(userId: Types.ObjectId): Promise<IUser> {
+    async getUserInfo(userId: Types.ObjectId): Promise<IUser> {
         const userInfo: IUser = await User.findById(userId);
         return userInfo
     }
 }
 
-export default UsersService
+export default UsersService.user_instance

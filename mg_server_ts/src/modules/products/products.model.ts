@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { IProduct } from "types";
 const Product = new mongoose.Schema(
   {
     name: {
@@ -16,4 +17,4 @@ const Product = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("product", Product);
+export default mongoose.model<IProduct>("product", Product);

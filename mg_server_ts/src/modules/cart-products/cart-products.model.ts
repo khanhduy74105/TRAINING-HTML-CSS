@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ICartProduct } from "types";
 
 const CartProductsModel = new mongoose.Schema(
     {
@@ -19,4 +20,4 @@ const CartProductsModel = new mongoose.Schema(
     }
 );
 
-export default mongoose.model("cart-products", CartProductsModel);
+export default mongoose.model<ICartProduct>("cart-products", CartProductsModel);
