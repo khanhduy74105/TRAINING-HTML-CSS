@@ -39,11 +39,11 @@ class UsersService extends BaseService<IUser> {
             currentUser.password
         );
         if (!isValid) {
-            return false;
+            return { msg: "Wrong password", success: false };
         }
 
         const access_token = generateAccessToken(currentUser);
-        return access_token;
+        return { access_token, success: true, msg: 'oke' };
     }
 
     async checkUserExisted(username: String): Promise<IUser> {

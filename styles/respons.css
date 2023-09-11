@@ -95,7 +95,7 @@
   .container {
     max-width: 960px;
   }
-  header .top-wrapper .top-popup{
+  header .top-wrapper .top-popup {
     justify-content: center;
     gap: 16px;
   }
@@ -398,7 +398,7 @@
     padding: 10px 24px;
   }
 
-  header #header #purchase-btn span:nth-child(1){
+  header #header #purchase-btn span:nth-child(1) {
     display: none;
   }
 
@@ -502,7 +502,7 @@
   .experi-section .experi-items br {
     display: none;
   }
-  .experi-content .experi-items.col-8 > div{
+  .experi-content .experi-items.col-8 > div {
     margin-left: unset;
   }
   .experi-section .special {
@@ -577,7 +577,7 @@
 }
 
 @media (max-width: 468px) {
-  header #header #purchase-btn{
+  header #header #purchase-btn {
     display: none;
   }
 }

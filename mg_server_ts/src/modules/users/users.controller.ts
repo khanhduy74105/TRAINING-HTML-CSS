@@ -79,9 +79,9 @@ class UsersController {
                 });
             }
 
-            const access_token = await UserService.loginUser({ username, password });
-            if (access_token) {
-                res.cookie("access_token", access_token, {
+            const response = await UserService.loginUser({ username, password });
+            if (response.success) {
+                res.cookie("access_token", response.access_token, {
                     httpOnly: true,
                     secure: true,
                     domain: "localhost",
@@ -96,7 +96,7 @@ class UsersController {
 
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
-                msg: "Login Failed!",
+                msg: response.msg,
             });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

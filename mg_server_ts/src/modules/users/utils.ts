@@ -12,7 +12,7 @@ export const generateAccessToken = (data: IUser) => {
         },
         process.env.JWT_PRIVITE_KEY
     );
-    return access_token;
+    return access_token || null;
 };
 
 export const comparePassword = async (password: string, hashedPassword: string) => {

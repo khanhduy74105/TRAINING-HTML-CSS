@@ -6,7 +6,7 @@ import cors from 'cors'
 import ConnectDB from './config/db';
 import Route from './routes/index'
 const app: Application = express()
-const PORT: number = parseInt(process.env.PORT) || 3000
+const PORT: number = parseInt(process.env.PORT) || 5000
 
 
 async function main() {
