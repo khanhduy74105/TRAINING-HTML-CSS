@@ -1,0 +1,32 @@
+.cart-subtotal .btn {
+  cursor: pointer;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 0;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  border: black 2px solid;
+}
+.cart-subtotal .btn:first-child {
+  background-color: white;
+  color: black;
+}
+.cart-subtotal .btn:nth-child(2) {
+  background-color: rgb(34, 43, 62);
+  color: white;
+}
+.cart-subtotal .btn:hover {
+  background-color: rgb(34, 43, 62);
+  border-color: rgb(34, 43, 62);
+  color: white;
+}
+.cart-subtotal .btn:nth-child(2):hover {
+  background-color: white;
+  border-color: rgb(34, 43, 62);
+  color: rgb(34, 43, 62);
+}
+.cart-subtotal .subtotal-price {
+  font-size: 18px;
+  font-weight: 600;
+}

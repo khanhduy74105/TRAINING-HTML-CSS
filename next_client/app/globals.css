@@ -1,0 +1,183 @@
+* {
+  box-sizing:border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Hide the default scrollbar for Firefox */
+body {
+  background-color: aliceblue;
+  -ms-overflow-style: none; /* cho  Internet Explorer, Edge */
+  scrollbar-width: none; /* cho Firefox */
+  overflow-y: scroll; 
+}
+
+body::-webkit-scrollbar {
+  display: none; /* cho Chrome, Safari, and Opera */
+}
+@media (max-width: 1599.98px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+@media (max-width: 1399.98px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (max-width: 767.98px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (max-width: 468px) {
+  header #header #purchase-btn {
+    display: none;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+}
+
+.btn-group {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  gap: 0;
+}
+.btn-group button {
+  padding: 10px 0;
+  background-color: rgb(26, 56, 91);
+  border: none;
+  white-space: nowrap;
+  width: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  text-transform: uppercase;
+  transition: all 200ms;
+  animation: bottom-up 0.2s linear forwards;
+  transform: translateY(100%);
+}
+.btn-group button:nth-child(2) {
+  animation: bottom-up 0.2s linear 100ms forwards;
+}
+
+@keyframes bottom-up {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-group button:hover {
+  background-color: red;
+}
+.col-item {
+  flex: 0 0 auto;
+}
+
+.col-full {
+  width: 100%;
+}
+
+.col-1 {
+  width: 8.3333%;
+}
+.col-2 {
+  width: 16.6666%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.3333%;
+}
+.col-5 {
+  width: 41.6666%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-7 {
+  width: 58.3333%;
+}
+.col-8 {
+  width: 66.666%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.3333%;
+}
+.col-11 {
+  width: 91.6666%;
+}
+
+@media (max-width: 1199.98px) {
+  .col-full {
+    width: 100%;
+  }
+
+  .col-lg-1 {
+    width: 8.3333%;
+  }
+  .col-lg-2 {
+    width: 16.6666%;
+  }
+  .col-lg-3 {
+    width: 25%;
+  }
+  .col-lg-4 {
+    width: 33.3333%;
+  }
+  .col-lg-5 {
+    width: 41.6666%;
+  }
+  .col-lg-6 {
+    width: 50%;
+  }
+  .col-lg-7 {
+    width: 58.3333%;
+  }
+  .col-lg-8 {
+    width: 66.666%;
+  }
+  .col-lg-9 {
+    width: 75%;
+  }
+  .col-lg-10 {
+    width: 83.3333%;
+  }
+  .col-lg-11 {
+    width: 91.6666%;
+  }
+}
