@@ -1,11 +1,12 @@
-import MainActivities from "../components/MainActivities/MainActivities";
-import ClientService from "@/src/actions/ClientService";
+import ClientService from "@/actions/ClientService";
+import HomeLayout from "@/layouts/home/HomeLayout";
+import MainActivities from "@/modules/main-activities/MainActivities";
 
 export default async function Home() {
-  const productRespones = await ClientService.getProducts()
-  const { products } = productRespones
-  
+  const {products} = await ClientService.getProducts()
   return (
-    <MainActivities products={products}/>
+    <HomeLayout>
+        <MainActivities products={products}/>
+    </HomeLayout>
   )
 }

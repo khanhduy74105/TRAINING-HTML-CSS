@@ -18,7 +18,7 @@ class CartProductService extends BaseService<ICartProduct>{
     }
 
     async getCartItems({ cart_id }: Partial<ICartProduct>) {
-        const cartItems: ICartProduct[] = await CartProductService.cartProducts_service_instance.find({ cart_id });
+        const cartItems: ICartProduct[] = await CartProductsModel.find({ cart_id });
         return cartItems
     }
 
