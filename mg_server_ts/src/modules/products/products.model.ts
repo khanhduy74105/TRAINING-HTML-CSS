@@ -13,7 +13,7 @@ const Product = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, 
   }
 );
 

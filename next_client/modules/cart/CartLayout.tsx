@@ -6,8 +6,8 @@ import { AiOutlineClose, AiFillTag, AiFillAlert, AiFillAccountBook, AiFillPieCha
 import CartSlider from './cart-slider/CartSlider'
 import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
-import getCartProducts from '@/actions/getCartProducts'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
+import ClientService from '@/actions/ClientService'
 const CartLayout = () => {
   const { setIsOpenCart, isOpenCart, cartProducts, setcartProducts } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -18,11 +18,10 @@ const CartLayout = () => {
       }
       try {
         setIsLoading(true)
-        const data = await getCartProducts(cartProducts);
-        console.log(data)
-        setcartProducts((prev: any) => [...prev, ...data])
+        const data = await ClientService.getCartProducts();
+        setcartProducts((prev: any) => [...data])
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error); 
       }
     }
 
@@ -30,12 +29,6 @@ const CartLayout = () => {
       .finally(() => setIsLoading(false));
   }, [isOpenCart])
 
-  useEffect(() => {
-    const body = document.querySelector('body')
-    if (isOpenCart) {
-      // body?.setAttribute('over')
-    }
-  }, [isOpenCart])
 
   return (
     <div id="cart-layout" onClick={() => setIsOpenCart(false)}>

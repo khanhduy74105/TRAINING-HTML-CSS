@@ -11,10 +11,8 @@ const UserAccount = () => {
     const {setUser, user} = useContext(AuthContext)
     const router = useRouter()
 
-    const onLogout = ()=>{
-        ClientService.logoutUser().then(data => {
-            console.log(data)
-        })
+    const onLogout = async ()=>{
+        await ClientService.logoutUser()
         setUser(null)
         localStorage.removeItem('user')
     }
@@ -23,7 +21,6 @@ const UserAccount = () => {
         {!user 
         ?   
         <Button type="label" text="Login" action={() => {
-            console.log('first')
                 router.push('/auth')
         }}/>
         :
