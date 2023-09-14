@@ -1,4 +1,4 @@
-import ClientService from '@/actions/ClientService'
+import ClientService from '@/apis/ClientService'
 import Input from '@/components/core/input/Input'
 import { API_URL } from '@/constants'
 import { AuthContext } from '@/context/AuthContext'

@@ -27,6 +27,7 @@ const updateCartProduct = (_id: string, amount: number) => useFetch('cart-produc
 const getProducts = () => useFetch('products','GET')
 const logoutUser = () => useFetch('users/logout','POST')
 const deleteCartProduct = (id: string) => useFetch(`cart-products/${id}`,'DELETE')
+
 export default {
     addProduct,
     getCartProducts,

@@ -1,11 +1,12 @@
 'use client'
 
-import ClientService from '@/actions/ClientService'
+import ClientService from '@/apis/ClientService'
 import { AuthContext } from '@/context/AuthContext'
 import { ICartProduct } from '@/types'
 import { useState, useContext } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { GrNext, GrPrevious } from 'react-icons/gr'
+import './style.css'
 interface CartItemProps {
   data: ICartProduct
 }
@@ -62,7 +63,7 @@ const CartItem: React.FC<CartItemProps> = ({
           <button className="decrease-btn" onClick={() => onUpdateAmount(amount - 1)}>
             <GrPrevious />
           </button>
-          <input className='blur-listener-input appearance-none' type="number" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} onBlur={() => onUpdateAmount(amount)} disabled={isLoading} />
+          <input className='blur-listener-input appearance-none ' type="number" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} onBlur={() => onUpdateAmount(amount)} disabled={isLoading} />
           <button className="increase-btn" onClick={() => onUpdateAmount(amount + 1)}>
             <GrNext />
           </button>

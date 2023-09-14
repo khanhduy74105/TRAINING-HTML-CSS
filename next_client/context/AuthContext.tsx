@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { createContext } from "react";
 import { ICartProduct, IUser } from '../types';
-import ClientService from '../actions/ClientService';
+import ClientService from '../apis/ClientService';
 
 interface AuthContextType {
     user: Partial<IUser> | null,

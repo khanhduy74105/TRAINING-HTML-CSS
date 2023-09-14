@@ -1,6 +1,6 @@
 "use client"
 
-import ClientService from "@/actions/ClientService"
+import ClientService from "@/apis/ClientService"
 import Button from "@/components/core/button/Button"
 import { AuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"

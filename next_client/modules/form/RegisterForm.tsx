@@ -1,4 +1,5 @@
 'use client'
+
 import Input from '@/components/core/input/Input'
 import { API_URL } from '@/constants'
 import { AuthContext } from '@/context/AuthContext'
@@ -40,7 +41,6 @@ class RegisterForm extends Component<{changeAction: () => void}, {username:strin
             alert('missing field')
             return
         }
-        console.log(this.state)
             const response = await fetch(`${API_URL}/users/register`, {
                 method: "POST",
                 credentials: "include",

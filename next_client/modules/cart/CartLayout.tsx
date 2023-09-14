@@ -7,7 +7,7 @@ import CartSlider from './cart-slider/CartSlider'
 import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
-import ClientService from '@/actions/ClientService'
+import ClientService from '@/apis/ClientService'
 const CartLayout = () => {
   const { setIsOpenCart, isOpenCart, cartProducts, setcartProducts } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState<boolean>(false)

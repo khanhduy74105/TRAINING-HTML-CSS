@@ -1,4 +1,4 @@
-import ClientService from "@/actions/ClientService";
+import ClientService from "@/apis/ClientService";
 import HomeLayout from "@/layouts/home/HomeLayout";
 import MainActivities from "@/modules/main-activities/MainActivities";
 
