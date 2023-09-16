@@ -13,7 +13,7 @@ interface AuthContextType {
     isOpenCart: boolean,
     setIsOpenCart: any
 }
-export const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContextType & any>({
     user: null,
     setUser: () => { },
     cartProducts: [],
@@ -35,7 +35,7 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
     useEffect(() => {
         if (localStorage.getItem('user')) {
             ClientService.getUserInfo()
-                .then(data => { 
+                .then(data => {
                     if (data.success) {
                         setUser(data.data)
                     }
@@ -43,13 +43,56 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
         }
     }, [])
 
-    const valueObj: AuthContextType = {
+    const addToCart = async (_id: string) => {
+        const data = await ClientService.addProduct(_id)
+        if (data.success) {
+            setcartProducts((prev: ICartProduct[]) => {
+                return prev.map((cartProduct) => {
+                    return cartProduct.item._id === _id ? {
+                        ...cartProduct,
+                        amount: data.data.quantity
+                    } : cartProduct
+                })
+            })
+        }
+    }
+    const updateCartProduct = async (_id: string, newAmount: number) => {
+        if (newAmount <= 0) {
+            await removeItem(_id)
+        }
+
+        const respone = await ClientService.updateCartProduct(_id, newAmount)
+        if (respone.success) {
+            setcartProducts((prev: ICartProduct[]) => {
+                return prev.map(current => current._id === _id ? {
+                    ...current,
+                    amount: respone.data.quantity
+                }
+                    :
+                    current
+                )
+            })
+        }
+    }
+
+    const removeItem = async (_id: string) => {
+        const respone = await ClientService.deleteCartProduct(_id)
+        if (respone.success) {
+            setcartProducts((prev: ICartProduct[]) => {
+                return prev.filter(current => current._id !== _id)
+            })
+        }
+    }
+    const valueObj: AuthContextType & any = {
         user,
         setUser,
         cartProducts,
         setcartProducts,
         isOpenCart,
-        setIsOpenCart
+        setIsOpenCart,
+        addToCart,
+        updateCartProduct,
+        removeItem
     }
 
     return (

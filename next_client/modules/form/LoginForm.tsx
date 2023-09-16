@@ -1,9 +1,8 @@
 import ClientService from '@/apis/ClientService'
 import Input from '@/components/core/input/Input'
-import { API_URL } from '@/constants'
 import { AuthContext } from '@/context/AuthContext'
 import { setUserDataToLocal } from '@/utils'
-import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import React, { useContext, useState } from 'react'
 
 interface LoginFormProps {
@@ -12,7 +11,7 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({
     changeAction
 }) => {
-    const router = useRouter()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const { setUser } = useContext(AuthContext)
     const [loginData, setLoginData] = useState<any>({
         username: null,
@@ -27,29 +26,21 @@ const LoginForm: React.FC<LoginFormProps> = ({
     }
 
     const onSubmit = async () => {
+        setIsLoading(true)
         if (loginData.username && loginData.password) {
-            const response = await fetch(`${API_URL}/users/login`, {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(loginData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            const data = await response.json();
-
+            const data = await ClientService.loginUser(loginData)
             if (data.success) {
                 const resInfo = await ClientService.getUserInfo()
                 if (resInfo.success) {
                     setUser(resInfo.data)
                     setUserDataToLocal(resInfo.data)
-                    router.push('/')
                 }
             } else {
                 alert(data.msg)
             }
         }
+        setIsLoading(false)
+
     }
     return (
         <div className="bg-gray-100 flex items-center justify-center">
@@ -58,15 +49,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 <form onSubmit={(e) => { e.preventDefault() }}>
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-gray-600">Username</label>
-                        <Input onChange={ onChangeInput} placehoder='Enter username' name='username' />
+                        <Input onChange={onChangeInput} placehoder='Enter username' name='username' />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-gray-600">Password</label>
-                        <Input onChange={ onChangeInput} placehoder='Enter password' name='password' type='password'/>
+                        <Input onChange={onChangeInput} placehoder='Enter password' name='password' type='password' />
 
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                        <button type="submit" 
+                        <button type="submit"
 
                             className="bg-blue-500 text-white hover:bg-blue-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onClick={onSubmit}
@@ -75,6 +66,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     </div>
                 </form>
             </div>
+            {isLoading && <div className="absolute right-0 left-0 bottom-0 top-0 bg-[#0000002a] flex items-center justify-center">
+                <Image src='/assets/90-ring.svg' alt='a' width={80} height={80} />
+            </div>}
         </div>
     )
 }

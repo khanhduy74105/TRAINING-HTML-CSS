@@ -1,6 +1,5 @@
 'use client'
 
-import ClientService from '@/apis/ClientService'
 import { AuthContext } from '@/context/AuthContext'
 import { ICartProduct } from '@/types'
 import { useState, useContext } from 'react'
@@ -14,38 +13,18 @@ const CartItem: React.FC<CartItemProps> = ({
   data
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { setcartProducts } = useContext(AuthContext)
+  const {updateCartProduct, removeItem} = useContext(AuthContext)
   const [amount, setAmount] = useState<number>(data.amount)
   const onUpdateAmount = async (newAmount: number) => {
-    if (newAmount <= 0) {
-      onRemoveItem()
-      return
-    }
-    setAmount(newAmount)
     setIsLoading(true)
-    const respone = await ClientService.updateCartProduct(data._id, newAmount)
-    if (respone.success) {
-      setcartProducts((prev: ICartProduct[]) => {
-        return prev.map(current => current._id === data._id ? {
-          ...current,
-          amount: respone.data.quantity
-        }
-          :
-          current
-        )
-      })
-      setIsLoading(false)
-    }
+    await updateCartProduct(data._id, newAmount)
+    setAmount(newAmount)
+    setIsLoading(false)
   }
 
   const onRemoveItem = async () => {
     setIsLoading(true)
-    const respone = await ClientService.deleteCartProduct(data._id)
-    if (respone.success) {
-      setcartProducts((prev: ICartProduct[]) => {
-        return prev.filter(current => current._id !== data._id)
-      })
-    }
+    await removeItem(data._id)
     setIsLoading(false)
   }
   return (
@@ -63,7 +42,8 @@ const CartItem: React.FC<CartItemProps> = ({
           <button className="decrease-btn" onClick={() => onUpdateAmount(amount - 1)}>
             <GrPrevious />
           </button>
-          <input className='blur-listener-input appearance-none ' type="number" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} onBlur={() => onUpdateAmount(amount)} disabled={isLoading} />
+          <input className='blur-listener-input appearance-none ' type="number" 
+            value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} onBlur={() => {onUpdateAmount(amount)}} disabled={isLoading} />
           <button className="increase-btn" onClick={() => onUpdateAmount(amount + 1)}>
             <GrNext />
           </button>

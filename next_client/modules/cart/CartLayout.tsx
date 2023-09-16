@@ -41,7 +41,7 @@ const CartLayout = () => {
         </div>
 
         <div className="cart-products">
-          {cartProducts?.map((cartProductItem) => {
+          {cartProducts?.map((cartProductItem: any) => {
             return <CartItem key={cartProductItem._id} data={cartProductItem} />
           })}
         </div>

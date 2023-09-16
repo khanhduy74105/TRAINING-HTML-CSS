@@ -17,11 +17,11 @@ const UserAccount = () => {
         localStorage.removeItem('user')
     }
     return (
-        <div className="flex items-center justify-end gap-21">
+        <div className="flex items-center justify-end gap-21"> 
         {!user 
         ?   
         <Button type="label" text="Login" action={() => {
-                router.push('/auth')
+                router.push('/auth/login')
         }}/>
         :
         <>

@@ -6,26 +6,16 @@ import LoginForm from '../../modules/form/LoginForm'
 import AuthLayout from '@/layouts/auth/AuthLayout'
 import { AuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-const page = () => {
-    const router = useRouter()
-    const [isLoginForm, setIsLoginForm] = useState<boolean>(true)
-    const {user} = useContext(AuthContext)
-    
-    useEffect(()=>{
-        if (user) {
-            router.push('/')
-        }
-    },[user])
+const Page = ({children}:{children: React.ReactNode} ) => {
+
 
     return (<AuthLayout>
             <div className="form flex items-center justify-center mt-10">
-                {!isLoginForm ?
-                    <RegisterForm changeAction={() => setIsLoginForm(true)}/>
-                    :
-                    <LoginForm changeAction={() => setIsLoginForm(false)} />
+                {
+                    children
                 }
             </div>
         </AuthLayout>)
 }
 
-export default page
+export default Page

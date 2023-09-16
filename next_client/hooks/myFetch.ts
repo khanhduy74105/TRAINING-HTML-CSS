@@ -1,6 +1,6 @@
 import { API_URL } from "@/constants";
 
-export default async function(route: string, method: string, body?: any){
+const myFetch = async function(route: string, method: string, body?: any){
     let options = {}
     if (method === 'GET') {
         options = {
@@ -24,3 +24,4 @@ export default async function(route: string, method: string, body?: any){
     const data = await respone.json()
     return data
 }
+export default myFetch
