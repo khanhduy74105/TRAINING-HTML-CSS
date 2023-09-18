@@ -1,6 +1,5 @@
 "use client"
 
-import ClientService from "@/apis/ClientService"
 import Button from "@/components/core/button/Button"
 import { AuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
@@ -8,13 +7,11 @@ import { useContext } from "react"
 
 
 const UserAccount = () => {
-    const {setUser, user} = useContext(AuthContext)
+    const {logoutUser, user} = useContext(AuthContext)
     const router = useRouter()
 
     const onLogout = async ()=>{
-        await ClientService.logoutUser()
-        setUser(null)
-        localStorage.removeItem('user')
+        await logoutUser
     }
     return (
         <div className="flex items-center justify-end gap-21"> 

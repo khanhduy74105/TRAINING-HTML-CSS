@@ -1,7 +1,6 @@
 'use client'
 import withAuth from '@/HOCs/withAuth'
-import LoginForm from '@/modules/form/LoginForm'
-import RegisterForm from '@/modules/form/RegisterForm'
+import RegisterForm from '@/modules/auth/RegisterForm'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 

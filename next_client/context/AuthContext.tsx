@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { createContext } from "react";
 import { ICartProduct, IUser } from '../types';
-import ClientService from '../apis/ClientService';
+import AuthApi from '@/apis/AuthApi';
+import CartProductsApi from '@/apis/CartProductsApi';
 
 interface AuthContextType {
     user: Partial<IUser> | null,
@@ -32,19 +33,15 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
     const [cartProducts, setcartProducts] = useState<ICartProduct[]>([])
     const [isOpenCart, setIsOpenCart] = useState<boolean>(false)
 
-    useEffect(() => {
-        if (localStorage.getItem('user')) {
-            ClientService.getUserInfo()
-                .then(data => {
-                    if (data.success) {
-                        setUser(data.data)
-                    }
-                })
-        }
-    }, [])
+
+
+    const getCartProducts = async () => {
+        const data = await CartProductsApi.getCartProducts();
+        setcartProducts((prev: any) => [...data])
+    }
 
     const addToCart = async (_id: string) => {
-        const data = await ClientService.addProduct(_id)
+        const data = await CartProductsApi.addProduct(_id)
         if (data.success) {
             setcartProducts((prev: ICartProduct[]) => {
                 return prev.map((cartProduct) => {
@@ -61,7 +58,7 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
             await removeItem(_id)
         }
 
-        const respone = await ClientService.updateCartProduct(_id, newAmount)
+        const respone = await CartProductsApi.updateCartProduct(_id, newAmount)
         if (respone.success) {
             setcartProducts((prev: ICartProduct[]) => {
                 return prev.map(current => current._id === _id ? {
@@ -76,12 +73,18 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
     }
 
     const removeItem = async (_id: string) => {
-        const respone = await ClientService.deleteCartProduct(_id)
+        const respone = await CartProductsApi.deleteCartProduct(_id)
         if (respone.success) {
             setcartProducts((prev: ICartProduct[]) => {
                 return prev.filter(current => current._id !== _id)
             })
         }
+    }
+
+    const logoutUser = async ()=>{
+        await AuthApi.logoutUser()
+        setUser(null)
+        localStorage.removeItem('user')
     }
     const valueObj: AuthContextType & any = {
         user,
@@ -90,11 +93,23 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
         setcartProducts,
         isOpenCart,
         setIsOpenCart,
+        getCartProducts,
         addToCart,
         updateCartProduct,
-        removeItem
+        removeItem,
+        logoutUser
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            AuthApi.getUserInfo()
+                .then(data => {
+                    if (data.success) {
+                        setUser(data.data)
+                    }
+                })
+        }
+    }, [])
     return (
         <AuthContext.Provider value={valueObj}>
             {children}

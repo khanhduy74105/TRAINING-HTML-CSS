@@ -1,5 +1,5 @@
 'use client'
-import HomeHeader from '@/modules/headers/home-header/HomeHeader'
+import HomeHeader from '@/layouts/home/home-header/HomeHeader'
 import React from 'react'
 
 type Props = {

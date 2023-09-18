@@ -1,7 +1,7 @@
 'use client'
 import withAuth from '@/HOCs/withAuth'
 import { AuthContext } from '@/context/AuthContext'
-import LoginForm from '@/modules/form/LoginForm'
+import LoginForm from '@/modules/auth/LoginForm'
 import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 

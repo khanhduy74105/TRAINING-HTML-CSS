@@ -1,8 +1,7 @@
 'use client'
 
-import ClientService from '@/apis/ClientService'
+import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
-import { API_URL } from '@/constants'
 import { AuthContext } from '@/context/AuthContext'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
@@ -49,7 +48,7 @@ class RegisterForm extends Component<{ changeAction: () => void }, { isLoading: 
             ...prevState,
             isLoading: true
         }))
-        const data = await ClientService.registerUser({
+        const data = await AuthApi.registerUser({
             username,
             password
         })

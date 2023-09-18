@@ -7,9 +7,9 @@ import CartSlider from './cart-slider/CartSlider'
 import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
-import ClientService from '@/apis/ClientService'
-const CartLayout = () => {
-  const { setIsOpenCart, isOpenCart, cartProducts, setcartProducts } = useContext(AuthContext)
+const CartList
+ = () => {
+  const { setIsOpenCart, isOpenCart, cartProducts ,getCartProducts} = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   useEffect(() => {
     async function fetchData() {
@@ -18,8 +18,7 @@ const CartLayout = () => {
       }
       try {
         setIsLoading(true)
-        const data = await ClientService.getCartProducts();
-        setcartProducts((prev: any) => [...data])
+        await getCartProducts()
       } catch (error) {
         console.error('Error fetching data:', error); 
       }
@@ -30,7 +29,7 @@ const CartLayout = () => {
   }, [isOpenCart])
 
 
-  return (
+  return isOpenCart && (
     <div id="cart-layout" onClick={() => setIsOpenCart(false)}>
       <div className="cart-section" onClick={e => e.stopPropagation()}>
         <div className="cart-header">
@@ -75,4 +74,4 @@ const CartLayout = () => {
   )
 }
 
-export default CartLayout
+export default CartList

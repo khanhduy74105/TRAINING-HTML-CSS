@@ -11,9 +11,7 @@ const ProductsLayout: React.FC<ProductsLayout> = ({ products }) => {
     return (
         <div className='row'>
             {products && products.map((product: IProduct) => (
-                // <Suspense fallback={<div>Loading product..</div>} key={product._id} >
                     <ProductItem  {...product}  key={product._id}/>
-                // </Suspense>
             ))}
         </div>
     )

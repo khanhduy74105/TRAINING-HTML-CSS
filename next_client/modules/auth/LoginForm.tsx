@@ -1,8 +1,9 @@
-import ClientService from '@/apis/ClientService'
+import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
 import { AuthContext } from '@/context/AuthContext'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 
 interface LoginFormProps {
@@ -11,6 +12,7 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({
     changeAction
 }) => {
+    const router = useRouter()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { setUser } = useContext(AuthContext)
     const [loginData, setLoginData] = useState<any>({
@@ -28,12 +30,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const onSubmit = async () => {
         setIsLoading(true)
         if (loginData.username && loginData.password) {
-            const data = await ClientService.loginUser(loginData)
+            const data = await AuthApi.loginUser(loginData)
             if (data.success) {
-                const resInfo = await ClientService.getUserInfo()
+                const resInfo = await AuthApi.getUserInfo()
                 if (resInfo.success) {
                     setUser(resInfo.data)
                     setUserDataToLocal(resInfo.data)
+                    router.push('/')
                 }
             } else {
                 alert(data.msg)
