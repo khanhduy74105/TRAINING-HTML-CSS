@@ -38,9 +38,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
             <div className="product_item">
                 <div className="product_wrapper group">
                     <Suspense fallback={<div>Loading image</div>}>
-                        <Image src={images[0]} sizes='auto' fill={true} alt="image" blurDataURL='/90-ring.svg'/>
+                        <Image src={images[0]} sizes='' fill={true} alt="image" blurDataURL='/90-ring.svg'/>
                         <div className="product_wrapper--layout">
-                            <Image src={images[1]} sizes='auto' fill={true} alt="image" />
+                            <Image src={images[1]} sizes='' fill={true} alt="image" />
                             <div className="btn-group">
                                 <Button type={'filled'} text='Quick view'/>
 
