@@ -8,14 +8,14 @@ type Props = {
   name: string
 }
 
-const Input = ({type = 'text', placehoder, onChange, name}: Props) => {
+const Input = (props: Props) => {
   return (
     <div className=''>
       <input className='w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500 my-1' 
-        type={type} 
-        placeholder={placehoder} 
-        onChange={onChange}
-        name={name}
+        type={props.type} 
+        placeholder={props.placehoder} 
+        onChange={props.onChange}
+        name={props.name}
       />
     </div>
   )

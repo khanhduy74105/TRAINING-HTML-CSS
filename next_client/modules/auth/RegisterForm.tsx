@@ -10,7 +10,11 @@ interface RegisterFormProps {
     changeAction: () => void
 }
 
-class RegisterForm extends Component<{ changeAction: () => void }, { isLoading: boolean, username: string, password: string, confirm_password: string }> {
+interface StateProps {
+    isLoading: boolean, username: string, password: string, confirm_password: string
+}
+
+class RegisterForm extends Component<RegisterFormProps, StateProps> {
 
     static contextType = AuthContext
     context!: React.ContextType<typeof AuthContext>

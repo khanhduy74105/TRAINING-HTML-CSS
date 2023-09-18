@@ -6,23 +6,18 @@ type ButonProps = {
     type: 'label' | 'filled',
     isLoading? :boolean
 }
-const Button: React.FC<ButonProps> = ({
-    text,
-    action,
-    type,
-    isLoading
-}) => {
+const Button: React.FC<ButonProps> = (props: ButonProps) => {
   return (
     
     <div className={`
         flex justify-center items-center gap-2 flex-1 animate-bottomUp cursor-pointer transition-all
-        ${type === 'label' && 'hover:text-dark-red'}
-        ${type === 'filled' && 'bg-dark-blue py-2 text-white text-xl hover:bg-dark-red'}
+        ${props.type === 'label' && 'hover:text-dark-red'}
+        ${props.type === 'filled' && 'bg-dark-blue py-2 text-white text-xl hover:bg-dark-red'}
     `}
-        onClick={action}
+        onClick={props.action}
     >
-         {isLoading && <img src="./assets/90-ring.svg" alt="" className="loader-spinner" style={{ width: '20px', height: '20px', }} />}
-        {text}
+         {props.isLoading && <img src="./assets/90-ring.svg" alt="" className="loader-spinner" style={{ width: '20px', height: '20px', }} />}
+        {props.text}
     </div>
   )
 }

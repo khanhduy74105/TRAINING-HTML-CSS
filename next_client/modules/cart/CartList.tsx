@@ -8,70 +8,70 @@ import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
 const CartList
- = () => {
-  const { setIsOpenCart, isOpenCart, cartProducts ,getCartProducts} = useContext(AuthContext)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  useEffect(() => {
-    async function fetchData() {
-      if (!isOpenCart) {
-        return;
+  = () => {
+    const { setIsOpenCart, isOpenCart, cartProducts, getCartProducts } = useContext(AuthContext)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    useEffect(() => {
+      async function fetchData() {
+        if (!isOpenCart) {
+          return;
+        }
+        try {
+          setIsLoading(true)
+          await getCartProducts()
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
       }
-      try {
-        setIsLoading(true)
-        await getCartProducts()
-      } catch (error) {
-        console.error('Error fetching data:', error); 
-      }
-    }
 
-    fetchData()
-      .finally(() => setIsLoading(false));
-  }, [isOpenCart])
+      fetchData()
+        .finally(() => setIsLoading(false));
+    }, [isOpenCart])
 
 
-  return isOpenCart && (
-    <div id="cart-layout" onClick={() => setIsOpenCart(false)}>
-      <div className="cart-section" onClick={e => e.stopPropagation()}>
-        <div className="cart-header">
-          <h4>Your cart</h4>
-          <span onClick={() => setIsOpenCart(false)}>
-            <AiOutlineClose />
-          </span>
+    return isOpenCart && (
+      <div id="cart-layout" onClick={() => setIsOpenCart(false)}>
+        <div className="cart-section" onClick={e => e.stopPropagation()}>
+          <div className="cart-header">
+            <h4>Your cart</h4>
+            <span onClick={() => setIsOpenCart(false)}>
+              <AiOutlineClose />
+            </span>
+          </div>
+
+          <div className="cart-products">
+            {cartProducts?.map((cartProductItem: any) => {
+              return <CartItem key={cartProductItem._id} data={cartProductItem} />
+            })}
+          </div>
+
+          <div className="cart-labels">
+            <div className="">
+              <AiFillAlert />
+            </div>
+            <div className="">
+              <AiFillTag />
+            </div>
+            <div className="">
+              <AiFillAccountBook />
+            </div>
+            <div className="">
+              <AiFillPieChart />
+            </div>
+            <div className="">
+              <AiFillTag />
+            </div>
+          </div>
+
+          <CartSlider />
+
+          <CartSubTotal />
+          {isLoading && <div className="cart-loader">
+            <img src="./assets/90-ring.svg" alt="" className="loader-spinner show" />
+          </div>}
         </div>
-
-        <div className="cart-products">
-          {cartProducts?.map((cartProductItem: any) => {
-            return <CartItem key={cartProductItem._id} data={cartProductItem} />
-          })}
-        </div>
-
-        <div className="cart-labels">
-          <div className="">
-            <AiFillAlert />
-          </div>
-          <div className="">
-            <AiFillTag />
-          </div>
-          <div className="">
-            <AiFillAccountBook />
-          </div>
-          <div className="">
-            <AiFillPieChart />
-          </div>
-          <div className="">
-            <AiFillTag />
-          </div>
-        </div>
-
-        <CartSlider />
-
-        <CartSubTotal />
-        {isLoading && <div className="cart-loader">
-          <img src="./assets/90-ring.svg" alt="" className="loader-spinner show" />
-        </div>}
       </div>
-    </div>
-  )
-}
+    )
+  }
 
 export default CartList
