@@ -13,7 +13,7 @@ const HomeHeader = (props: Props) => {
         <div className="">
             <Image
                 alt='logo'
-                src={'./assets/ocolus-logo.svg'}
+                src={'/assets/ocolus-logo.svg'}
                 width={200}
                 height={0}
             />

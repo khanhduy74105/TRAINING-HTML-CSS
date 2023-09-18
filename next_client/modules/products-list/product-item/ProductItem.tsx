@@ -6,11 +6,13 @@ import { AuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import './style.css'
 import Button from '@/components/core/button/Button'
+import Image from 'next/image'
+import { imageLoader } from '@/components/core/imageLoader/imageLoader'
 
 type ProductItemProps = Partial<IProduct>
 const ProductItem: React.FC<ProductItemProps> = ({
     _id,
-    images,
+    images =[],
     name,
     price
 }) => { 
@@ -36,9 +38,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
             <div className="product_item">
                 <div className="product_wrapper group">
                     <Suspense fallback={<div>Loading image</div>}>
-                        <img src={images && images[0]} alt="a" />
+                        <Image src={images[0]} sizes='auto' fill={true} alt="image" blurDataURL='/90-ring.svg'/>
                         <div className="product_wrapper--layout">
-                            <img src={images && images[1]} alt="a" />
+                            <Image src={images[1]} sizes='auto' fill={true} alt="image" />
                             <div className="btn-group">
                                 <Button type={'filled'} text='Quick view'/>
 
