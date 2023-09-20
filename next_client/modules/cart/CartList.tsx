@@ -7,30 +7,20 @@ import CartSlider from './cart-slider/CartSlider'
 import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
-import { useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import { cartProductsSelector } from '@/redux/selectors'
+import { fetchCartProducts } from '@/redux/slices/cartProductsSlice'
 const CartList
   = () => {
-    const { setIsOpenCart, isOpenCart, getCartProducts } = useContext(AuthContext)
+    const dispatch = useDispatch<any>()
+    const { setIsOpenCart, isOpenCart } = useContext(AuthContext)
     const cartProducts = useSelector(cartProductsSelector)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     useEffect(() => {
-      async function fetchData() {
-        if (!isOpenCart) {
-          return;
-        }
-        try {
-          setIsLoading(true)
-          await getCartProducts()
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
+      if (isOpenCart) {
+        dispatch(fetchCartProducts())
       }
-
-      fetchData()
-        .finally(() => setIsLoading(false));
-    }, [isOpenCart, getCartProducts])
-
+    }, [isOpenCart])
 
     return isOpenCart && (
       <div id="cart-layout" onClick={() => setIsOpenCart(false)}>

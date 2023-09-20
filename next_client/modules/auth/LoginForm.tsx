@@ -1,7 +1,6 @@
 import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
-import { AuthContext } from '@/context/AuthContext'
-import { setUser } from '@/redux/actions'
+import { UserSlice } from '@/redux/slices/authSlice'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -37,8 +36,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             if (data.success) {
                 const resInfo = await AuthApi.getUserInfo()
                 if (resInfo.success) {
-                    // setUser(resInfo.data)
-                    dispatch(setUser(resInfo.data))
+                    console.log(resInfo.data)
+                    dispatch(UserSlice.actions.set(resInfo.data))
                     setUserDataToLocal(resInfo.data)
                     router.push('/')
                 }

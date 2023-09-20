@@ -2,14 +2,17 @@
 
 import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
-import { setUser } from '@/redux/actions'
+import { UserSlice } from '@/redux/slices/authSlice'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+
 import { Component, ReactNode } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch,connect } from 'react-redux'
 
 interface RegisterFormProps {
-    changeAction: () => void
+    changeAction: () => void,
+    dispatch: any
 }
 
 interface StateProps {
@@ -39,8 +42,6 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
 
     onSubmit = async () => {
         const { username, password, confirm_password } = this.state
-
-        const dispatch = useDispatch()
         if (password !== confirm_password) {
             alert('Password not match')
             return
@@ -64,7 +65,8 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
         }))
         if (data.success) {
             setUserDataToLocal(data.data)
-            dispatch(setUser(data.data))
+            this.props.dispatch(UserSlice.actions.set(data.data));
+            window.location.replace("http://localhost:3000/");
         } else {
             alert(data.msg)
         }
@@ -109,5 +111,9 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
         )
     }
 }
-
-export default RegisterForm
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+      dispatch,
+    };
+  };
+export default connect(null, mapDispatchToProps)(RegisterForm);

@@ -1,6 +1,6 @@
 'use client'
 
-import { setUser } from '@/redux/actions';
+import { UserSlice } from '@/redux/slices/authSlice';
 import { useRouter } from 'next/navigation'
 import React, {useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,8 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     useEffect(() => {
       const user = localStorage.getItem('user')
       if (user) {
-        dispatch(setUser(JSON.parse(user)))
+        console.log(user)
+        dispatch(UserSlice.actions.set(JSON.parse(user)))
         router.push('/');
       }else{
         setIsLoaing(false)

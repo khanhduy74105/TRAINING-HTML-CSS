@@ -10,21 +10,17 @@ import { cartProductsSelector } from '@/redux/selectors'
 const CartSubTotal = () => {
 
     const cartProducts = useSelector(cartProductsSelector)
-    console.log(cartProducts)
-    // const subtotalPrice = useMemo(() => {
-    //     const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
-    //         return total + current.amount * current.item.price
-    //     }, 0)
-    //     return calculateSubtotal
-    // }, [cartProducts])
-    const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
-        return total + current.amount * current.item.price
-    }, 0)
+    const subtotalPrice = useMemo(() => {
+        const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
+            return total + current.amount * current.item.price
+        }, 0)
+        return calculateSubtotal
+    }, [cartProducts])
     return (
         <div className="cart-subtotal">
             <div className="subtotal-header">
                 <span>Subtotal</span>
-                <span className="subtotal-price">{calculateSubtotal} $</span>
+                <span className="subtotal-price">{subtotalPrice} $</span>
             </div>
             <p>Taxes and shipping calculated at checkout</p>
             <div>

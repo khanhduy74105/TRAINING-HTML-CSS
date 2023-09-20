@@ -12,7 +12,6 @@ class CartProductsApi {
       amount: current.quantity,
       _id: current._id,
     }));
-    console.log(items)
     return items;
   };
   static updateCartProduct = (_id: string, amount: number) =>

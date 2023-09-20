@@ -18,7 +18,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
     const user = useSelector(userSelector)
 
     const handleAddProduct = async (_id: string | undefined) => {
-        if (!user) {
+        if (!user.username) {
             router.push('/auth/login')
             return
         }
