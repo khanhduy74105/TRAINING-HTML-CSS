@@ -6,7 +6,7 @@ const initialState = {
   products: [],
   cartProducts: [],
 };
-
+console.log('first')
 const rootReducer = (state: any = initialState, action: ReduxAction) => {
   switch (action.type) {
     case "user/set":
