@@ -2,26 +2,29 @@
 
 import { AuthContext } from '@/context/AuthContext'
 import { ICartProduct } from '@/types'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, {  useContext, useMemo, useState } from 'react'
 import './style.css'
+import { useSelector } from 'react-redux'
+import { cartProductsSelector } from '@/redux/selectors'
 
 const CartSubTotal = () => {
-    const { cartProducts } = useContext(AuthContext)
-    const [subtotal, setSubtotal] = useState()
 
-
-
-    const subtotalPrice = useMemo(() => {
-        const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
-            return total + current.amount * current.item.price
-        }, 0)
-        return calculateSubtotal
-    }, [cartProducts])
+    const cartProducts = useSelector(cartProductsSelector)
+    console.log(cartProducts)
+    // const subtotalPrice = useMemo(() => {
+    //     const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
+    //         return total + current.amount * current.item.price
+    //     }, 0)
+    //     return calculateSubtotal
+    // }, [cartProducts])
+    const calculateSubtotal = cartProducts.reduce((total: number, current: ICartProduct) => {
+        return total + current.amount * current.item.price
+    }, 0)
     return (
         <div className="cart-subtotal">
             <div className="subtotal-header">
                 <span>Subtotal</span>
-                <span className="subtotal-price">{subtotalPrice} $</span>
+                <span className="subtotal-price">{calculateSubtotal} $</span>
             </div>
             <p>Taxes and shipping calculated at checkout</p>
             <div>

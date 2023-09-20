@@ -1,10 +1,12 @@
 import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
 import { AuthContext } from '@/context/AuthContext'
+import { setUser } from '@/redux/actions'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 interface LoginFormProps {
     changeAction: () => void
@@ -12,9 +14,10 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({
     changeAction
 }) => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { setUser } = useContext(AuthContext)
+    // const { setUser } = useContext(AuthContext)
     const [loginData, setLoginData] = useState<any>({
         username: null,
         password: null
@@ -34,7 +37,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             if (data.success) {
                 const resInfo = await AuthApi.getUserInfo()
                 if (resInfo.success) {
-                    setUser(resInfo.data)
+                    // setUser(resInfo.data)
+                    dispatch(setUser(resInfo.data))
                     setUserDataToLocal(resInfo.data)
                     router.push('/')
                 }

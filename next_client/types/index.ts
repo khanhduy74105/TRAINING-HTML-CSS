@@ -1,6 +1,5 @@
 export type IUser = {
     username: string,
-    password: string
 }
 
 export type IProduct = {
@@ -16,4 +15,9 @@ export type ICartProduct = {
     _id: string,
     amount: number,
     item: IProduct
+}
+
+export type ReduxAction = {
+    type: string,
+    payload: any
 }

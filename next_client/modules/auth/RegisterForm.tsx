@@ -2,10 +2,12 @@
 
 import AuthApi from '@/apis/AuthApi'
 import Input from '@/components/core/input/Input'
-import { AuthContext } from '@/context/AuthContext'
+import { setUser } from '@/redux/actions'
 import { setUserDataToLocal } from '@/utils'
 import Image from 'next/image'
 import { Component, ReactNode } from 'react'
+import { useDispatch } from 'react-redux'
+
 interface RegisterFormProps {
     changeAction: () => void
 }
@@ -16,8 +18,6 @@ interface StateProps {
 
 class RegisterForm extends Component<RegisterFormProps, StateProps> {
 
-    static contextType = AuthContext
-    context!: React.ContextType<typeof AuthContext>
     constructor(props: RegisterFormProps) {
         super(props);
 
@@ -27,6 +27,7 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
             password: '',
             confirm_password: '',
         }
+
     }
 
     onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,8 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
 
     onSubmit = async () => {
         const { username, password, confirm_password } = this.state
-        const { setUser } = this.context
+
+        const dispatch = useDispatch()
         if (password !== confirm_password) {
             alert('Password not match')
             return
@@ -62,7 +64,7 @@ class RegisterForm extends Component<RegisterFormProps, StateProps> {
         }))
         if (data.success) {
             setUserDataToLocal(data.data)
-            setUser(data.data)
+            dispatch(setUser(data.data))
         } else {
             alert(data.msg)
         }

@@ -5,20 +5,16 @@ import { createContext } from "react";
 import { ICartProduct, IUser } from '../types';
 import AuthApi from '@/apis/AuthApi';
 import CartProductsApi from '@/apis/CartProductsApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartProduct, removeCartProductAction, setCartPropducts, updateCartProductAction } from '@/redux/actions';
+import ProductApi from '@/apis/ProductApi';
+import { userSelector } from '@/redux/selectors';
 
 interface AuthContextType {
-    user: Partial<IUser> | null,
-    setUser: any,
-    cartProducts: ICartProduct[],
-    setcartProducts: any,
     isOpenCart: boolean,
     setIsOpenCart: any
 }
 export const AuthContext = createContext<AuthContextType & any>({
-    user: null,
-    setUser: () => { },
-    cartProducts: [],
-    setcartProducts: () => { },
     isOpenCart: false,
     setIsOpenCart: () => { }
 })
@@ -29,87 +25,65 @@ interface AuthContextProps {
 const AuthContextProvider: React.FC<AuthContextProps> = ({
     children
 }) => {
-    const [user, setUser] = useState<Partial<IUser> | null>(null)
-    const [cartProducts, setcartProducts] = useState<ICartProduct[]>([])
+    const user = useSelector(userSelector)
+    const dispatch = useDispatch()
     const [isOpenCart, setIsOpenCart] = useState<boolean>(false)
-
-
 
     const getCartProducts = async () => {
         const data = await CartProductsApi.getCartProducts();
-        setcartProducts((prev: any) => [...data])
+        dispatch(setCartPropducts(data))
     }
 
     const addToCart = async (_id: string) => {
         const data = await CartProductsApi.addProduct(_id)
         if (data.success) {
-            setcartProducts((prev: ICartProduct[]) => {
-                return prev.map((cartProduct) => {
-                    return cartProduct.item._id === _id ? {
-                        ...cartProduct,
-                        amount: data.data.quantity
-                    } : cartProduct
-                })
-            })
+            const response = await ProductApi.getProductById(data.data.product_id)
+            dispatch(addCartProduct({
+                _id: data.data._id,
+                item: response.data,
+                amount: data.data.quantity
+            }))
+        }else{
+            console.log('Cannot add')
         }
     }
     const updateCartProduct = async (_id: string, newAmount: number) => {
         if (newAmount <= 0) {
             await removeItem(_id)
+            return
         }
-
         const respone = await CartProductsApi.updateCartProduct(_id, newAmount)
         if (respone.success) {
-            setcartProducts((prev: ICartProduct[]) => {
-                return prev.map(current => current._id === _id ? {
-                    ...current,
-                    amount: respone.data.quantity
-                }
-                    :
-                    current
-                )
-            })
+            dispatch(updateCartProductAction(_id, respone.data.quantity))
         }
     }
 
     const removeItem = async (_id: string) => {
         const respone = await CartProductsApi.deleteCartProduct(_id)
         if (respone.success) {
-            setcartProducts((prev: ICartProduct[]) => {
-                return prev.filter(current => current._id !== _id)
-            })
+            dispatch(removeCartProductAction(_id))
         }
     }
 
-    const logoutUser = async ()=>{
-        await AuthApi.logoutUser()
-        setUser(null)
-        localStorage.removeItem('user')
-    }
+    useEffect(()=>{
+        if (user && isOpenCart) {
+            const fetchCarts = async ()=>{
+                await getCartProducts()
+            }
+    
+            fetchCarts()
+        }
+    },[isOpenCart, user])
+
     const valueObj: AuthContextType & any = {
-        user,
-        setUser,
-        cartProducts,
-        setcartProducts,
         isOpenCart,
         setIsOpenCart,
         getCartProducts,
         addToCart,
         updateCartProduct,
         removeItem,
-        logoutUser
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('user')) {
-            AuthApi.getUserInfo()
-                .then(data => {
-                    if (data.success) {
-                        setUser(data.data)
-                    }
-                })
-        }
-    }, [])
     return (
         <AuthContext.Provider value={valueObj}>
             {children}

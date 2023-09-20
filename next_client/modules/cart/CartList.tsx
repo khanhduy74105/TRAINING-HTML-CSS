@@ -7,9 +7,12 @@ import CartSlider from './cart-slider/CartSlider'
 import { AuthContext } from '@/context/AuthContext'
 import CartItem from './cart-item/CartItem'
 import CartSubTotal from './cart-subtotal/CartSubTotal'
+import { useSelector } from 'react-redux'
+import { cartProductsSelector } from '@/redux/selectors'
 const CartList
   = () => {
-    const { setIsOpenCart, isOpenCart, cartProducts, getCartProducts } = useContext(AuthContext)
+    const { setIsOpenCart, isOpenCart, getCartProducts } = useContext(AuthContext)
+    const cartProducts = useSelector(cartProductsSelector)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     useEffect(() => {
       async function fetchData() {
@@ -26,7 +29,7 @@ const CartList
 
       fetchData()
         .finally(() => setIsLoading(false));
-    }, [isOpenCart])
+    }, [isOpenCart, getCartProducts])
 
 
     return isOpenCart && (

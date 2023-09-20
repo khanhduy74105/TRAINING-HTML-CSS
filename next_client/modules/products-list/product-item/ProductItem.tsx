@@ -7,13 +7,16 @@ import { useRouter } from 'next/navigation'
 import './style.css'
 import Button from '@/components/core/button/Button'
 import Image from 'next/image'
+import { useSelector } from 'react-redux'
+import { userSelector } from '@/redux/selectors'
 
 type ProductItemProps =IProduct
 const ProductItem: React.FC<ProductItemProps> = (props) => { 
-    const { user, setIsOpenCart, addToCart } = useContext(AuthContext)
+    const { setIsOpenCart, addToCart } = useContext(AuthContext)
     const [loading, setLoading] = useState<boolean>(false)
-
     const router = useRouter()
+    const user = useSelector(userSelector)
+
     const handleAddProduct = async (_id: string | undefined) => {
         if (!user) {
             router.push('/auth/login')

@@ -29,6 +29,7 @@ export interface ICartProduct {
     cart_id?: Types.ObjectId,
     quantity?: number,
     product_id?: Types.ObjectId,
+    images: [string],
     createdAt: Date,
     updatedAt: Date
 }
