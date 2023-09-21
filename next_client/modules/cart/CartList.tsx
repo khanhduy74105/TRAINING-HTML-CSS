@@ -14,22 +14,22 @@ const CartList
     const { setIsOpenCart, isOpenCart, getCartProducts } = useContext(AuthContext)
     const cartProducts = useSelector(cartProductsSelector)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    useEffect(() => {
-      async function fetchData() {
-        if (!isOpenCart) {
-          return;
-        }
-        try {
-          setIsLoading(true)
-          await getCartProducts()
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
+    // useEffect(() => {
+    //   async function fetchData() {
+    //     if (!isOpenCart) {
+    //       return;
+    //     }
+    //     try {
+    //       setIsLoading(true)
+    //       await getCartProducts()
+    //     } catch (error) {
+    //       console.error('Error fetching data:', error);
+    //     }
+    //   }
 
-      fetchData()
-        .finally(() => setIsLoading(false));
-    }, [isOpenCart, getCartProducts])
+    //   fetchData()
+    //     .finally(() => setIsLoading(false));
+    // }, [isOpenCart, getCartProducts])
 
 
     return isOpenCart && (

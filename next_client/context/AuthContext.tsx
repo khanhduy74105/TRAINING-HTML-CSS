@@ -66,14 +66,14 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({
     }
 
     useEffect(()=>{
-        if (user && isOpenCart) {
+        if (user) {
             const fetchCarts = async ()=>{
                 await getCartProducts()
             }
     
             fetchCarts()
         }
-    },[isOpenCart, user])
+    },[user])
 
     const valueObj: AuthContextType & any = {
         isOpenCart,
